@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helados Nasty</title>
+
+<link href="style.css" rel="stylesheet"> 
+<style>
+  
+</style>
+</head>
+<body>
+<header>
+    <h1>Helados Nasty</h1>
+</header>
+
+<div class="container">
+    <div class="tab">
+        <button onclick="openTab('menu')">Menú</button>
+        <button onclick="openTab('pedidos')">Pedidos en línea</button>
+        <button onclick="openTab('reservar')">Reservar</button>
+    </div>
+
+    <div id="menu" class="tabcontent" style="display: block;">
+    
+	<div class="category1">
+        <h2>Especiales en Ofertas</h2>
+		<div id="cards-container">
+        <div class="card">
+            <img src="menu/img/eo1.png" alt="Plato Especial 1">
+            <h3>Helado de Manzana</h3>
+            <p>Precio: 146 CUP</p>
+            <span class="discount">-5%</span>
+            <button  id="show-product1-details" onclick="redirectToProduct1()">Ver Detalles</button>
+        </div>		
+		
+		 <div class="card">
+            <img src="menu/img/eo2.png" alt="Plato Especial 1">
+            <h3>Helado de Naranja</h3>
+            <p>Precio: 153 CUP</p>
+            <span class="discount">-20%</span>
+            <button>Ver Detalles</button>
+        </div> 
+		<div class="card">
+            <img src="menu/img/eo3.png" alt="Plato Especial 1">
+            <h3>Helado de Fresa</h3>
+            <p>Precio: 155 CUP</p>
+            <span class="discount">-14%</span>
+            <button>Ver Detalles</button>
+        </div>
+		</div>
+		
+    </div>
+	<div class="category2">
+        <h2>Helados</h2>
+        <div id="cards-container">
+        <div class="card">
+            <img src="menu/img/h1.png" alt="Helado1">
+            <h3>Leche Condensada</h3>
+            <p>Precio: 59.99 CUP</p>           
+            <button>Ver Detalles</button>
+        </div>
+		
+		 <div class="card">
+            <img src="menu/img/h2.png" alt="Helado2">
+            <h3>Fresa</h3>
+            <p>Precio: 59.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div> 
+		<div class="card">
+            <img src="menu/img/h3.png" alt="Helado3">
+            <h3>Manzana Verde</h3>
+            <p>Precio: 59.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div>
+		<div class="card">
+            <img src="menu/img/h4.png" alt="Helado4">
+            <h3>Cafe con Leche</h3>
+            <p>Precio: 59.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div>
+		<div class="card">
+            <img src="menu/img/h5.png" alt="Helado5">
+            <h3>Vainilla con Chispas</h3>
+            <p>Precio: 59.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div>
+		</div>
+    </div>
+	
+
+	<div class="category3">
+        <h2>Comida Rapida</h2>
+        <div id="cards-container">
+        <div class="card">
+            <img src="menu/img/ham1.png" alt="Plato Especial 1">
+            <h3>Hamburgesa Red</h3>
+            <p>Precio: 199.50</p>            
+            <button>Ver Detalles</button>
+        </div>
+		
+		 <div class="card">
+            <img src="menu/img/PS1.png" alt="Plato Especial 1">
+            <h3>Pizza de Salchichas</h3>
+            <p>Precio: 329.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div> 
+		<div class="card">
+            <img src="menu/img/PC1.png" alt="Plato Especial 1">
+            <h3>Pizza de Cebollas</h3>
+            <p>Precio: 389.99 CUP</p>            
+            <button>Ver Detalles</button>
+        </div>
+		</div>
+    </div>
+	
+	<div class="category3">
+        <h2>Bebidas</h2>
+        <div id="cards-container">
+        <div class="card">
+            <img src="menu/img/SM1.png" alt="Plato Especial 1">
+            <h3>Smoothie Fresa</h3>
+            <p>Precio: 199.50</p>            
+            <button>Ver Detalles</button>
+        </div>
+		
+		 <div class="card">
+            <img src="menu/img/SM2.png" alt="Plato Especial 1">
+            <h3>Smoothie Naranja</h3>
+            <p>Precio: $9.99</p>            
+            <button>Ver Detalles</button>
+        </div> 
+		<div class="card">
+            <img src="menu/img/SM3.png" alt="Plato Especial 1">
+            <h3>Smoothie Uva</h3>
+            <p>Precio: $9.99</p>            
+            <button>Ver Detalles</button>
+        </div>
+		<div class="card">
+            <img src="menu/img/SM4.png" alt="Plato Especial 1">
+            <h3>Smoothie Limon</h3>
+            <p>Precio: $9.99</p>            
+            <button>Ver Detalles</button>
+        </div>
+		</div>
+    </div>
+	
+	</div>
+	
+
+    <div id="pedidos" class="tabcontent">
+        <h2>Muy pronto disonibles los pedidos en línea</h2>
+        <p>Realiza pedidos para llevar o entrega a domicilio desde la aplicación.</p>
+    </div>
+	
+    <div id="reservar" class="tabcontent">
+        
+        <p>Reserva una mesa para una fecha especial con antelacion.</p>
+
+        <form>
+			<label for="nombreReserva">Nombre y Apellidos:</label>
+            <input type="text" id="nombreReserva" name="nombreReserva" placeholder="Nombre y Apellidos">
+
+            <label for="telefonoReserva">Teléfono de Contacto:</label>
+            <input type="tel" id="telefonoReserva" name="telefonoReserva" placeholder="Teléfono de Contacto">
+			
+			<label for="emailReserva">Correo Gmail:</label>
+            <input type="email" id="emailReserva" name="emailReserva" placeholder="Correo">
+			
+			<label for="numPersonas">Número de Personas:</label>
+            <input type="number" id="numPersonas" name="numPersonas" min="1" max="10"  placeholder="Cantidad de personas">
+			
+            <label for="fechaReserva">Fecha de Reserva:</label>
+            <input type="date" id="fechaReserva" name="fechaReserva">
+
+            <label for="horaReserva">Hora de Reserva:</label>
+            <input type="time" id="horaReserva" name="horaReserva">
+
+            <button type="button" onclick="confirmarReserva()">Confirmar</button>
+            <button type="button" onclick="cancelarReserva()">Cancelar</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div id="cancelModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCancelModal()">&times;</span>
+        <h2>Cancelar Reserva</h2>
+        <form>
+            <label for="nombreCancel">Nombre y Apellidos:</label>
+            <input type="text" id="nombreCancel" name="nombreCancel" placeholder="Nombre y Apellidos">
+
+            <label for="telefonoCancel">Teléfono de Contacto:</label>
+            <input type="tel" id="telefonoCancel" name="telefonoCancel" placeholder="Teléfono de Contacto">
+
+            <label for="correoCancel">Correo Electrónico:</label>
+            <input type="email" id="correoCancel" name="correoCancel" placeholder="Correo Electrónico">
+
+            <button type="button" onclick="enviarCancelacion()">Cancelar Reserva</button>
+        </form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

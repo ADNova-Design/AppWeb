@@ -247,6 +247,18 @@
     100% { transform: rotate(360deg); }
 }
 
+.soportbtn {
+    background: none;
+    width: -webkit-fill-available;
+    font-size: 20px;
+    border: none;
+	margin-bottom: 10px;
+}
+.soportbtn a:hover{
+	color: gray;
+	transition: opacity 1s;
+}
+
 
 /* Estilos para el navbar */
 .navbar {

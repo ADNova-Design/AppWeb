@@ -278,3 +278,17 @@ async function submitOrder() {
         setDarkMode(!body.classList.contains('dark-mode'));
     });
 });
+
+
+document.querySelector('.contactSuport').addEventListener('click', function(e) {
+    var appUrl = this.href;
+    var webUrl = 'https://web.whatsapp.com/send?phone=18632541732'; // URL de respaldo
+
+    var start = new Date().getTime();
+    setTimeout(function() {
+        var end = new Date().getTime();
+        if (end - start < 1500) {
+            window.location = webUrl;
+        }
+    }, 1000);
+});

@@ -31,6 +31,19 @@
     width: auto;
 }
 
+/* Estilos adicionales para el contenedor de los productos */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.col-md-6,
+.col-lg-4 {
+    display: flex;
+    justify-content: center;
+}
+
 .product:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -143,8 +156,9 @@
         }
         .cart-total {
             font-weight: bold;
-            text-align: right;
+            text-align: left;
             margin-top: 20px;
+			font-size: 20px;
         }
         .modal-dialog {
             max-width: 500px;
@@ -173,14 +187,17 @@
 
 .notification.show {
     opacity: 1;
+
 }
 
 .notification-success {
     background-color: #28a745;
+
 }
 
 .notification-error {
     background-color: #dc3545;
+	
 }
 
 /* Añade un estilo para el botón de cerrar */
@@ -188,10 +205,11 @@
     position: absolute;
     top: 5px;
     right: 5px;
+	
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 10px;
     cursor: pointer;
     opacity: 0.7;
     transition: opacity 0.2s;
@@ -235,6 +253,25 @@
     background-color: #ff5722 !important;
 }
 
+.navbar-toggler {
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    /* border: 1px solid transparent; */
+    /* border-radius: .25rem; */
+    transition: box-shadow .15s ease-in-out;
+}
+.navbar-light .navbar-toggler {
+color: transparent;
+border-color: transparent;
+}
+
+.place{
+	color: #fff !important;
+	margin: 12%;
+}
+
 .navbar-light .navbar-brand,
 .navbar-light .navbar-nav .nav-link {
     color: #fff !important;
@@ -245,8 +282,12 @@
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.navbar-light .navbar-toggler {
-    border-color: rgba(255,255,255,.5);
+.navbar-light .navbar-toggler { 
+border-color: transparent;
+}
+
+.navbar-toggler:focus:not(:focus-visible) {
+border-color: transparent;
 }
 
 /* Estilos para el navbar */
@@ -264,8 +305,20 @@
 }
 
 .navbar-light .navbar-toggler {
-    border-color: rgba(255,255,255,.5);
+   
 }
+
+.contactSuport {
+    outline: none;
+    color: white;
+    text-decoration: none;	
+}
+
+.contactSuport a:hover{
+    color: white;
+    text-decoration: none;	
+}
+
 
 /* Estilos para el modo oscuro */
 body.dark-mode {

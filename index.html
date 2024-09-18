@@ -14,12 +14,18 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"></a>
+     
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+			<br>
+			<li class="nav-item">                    				
+					<span class="place">Disponible solo en Las Tunas</span>
+                </li>
+				<br>
+				
                 <li class="nav-item">
     <a class="nav-link" href="#" id="darkModeToggle">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars" viewBox="0 0 16 16">
@@ -61,6 +67,8 @@
 </svg>
 					Invitanos un cafe</a>
                 </li>
+				
+				
             </ul>
         </div>
     </div>
@@ -84,6 +92,16 @@
                 </div>
                 <button class="btn btn-details" onclick="showDetails('Pizza con Salchichas', 'Deliciosa pizza con salsa de tomate, queso fresco y salchichas.')">Detalles</button>
                 <button class="btn" onclick="addToCart('Pizza con Salchichas', 130.45)">Agregar al carrito</button>
+            </div>
+			<div class="col-md-6 col-lg-4 product">
+                <img src="img/ph.png" alt="Pizza Hawaiana">
+                <h3>Pizza Hawaiana</h3>
+                <div class="price-container">
+                    <span class="old-price">$190.00</span>
+                    <span class="new-price">$160.45</span>
+                </div>
+                <button class="btn btn-details" onclick="showDetails('Pizza Hawaiana', 'Deliciosa pizza con salsa de tomate, queso fresco y fruta.')">Detalles</button>
+                <button class="btn" onclick="addToCart('Pizza Hawaiana', 160.45)">Agregar al carrito</button>
             </div>
             <div class="col-md-6 col-lg-4 product">
                 <img src="img/PZZ4.png" alt="Pizza Napolitana">
@@ -283,10 +301,11 @@
         <input type="time" class="form-control" id="deliveryTime" required>
     </div>
     <div class="mb-3">
-        <p>Transfiera la cantidad exacta de <strong id="totalAmount"></strong> a la cuenta en CUP:</p>
+        <p><strong id="totalAmount"></strong></p>
+		<p>Transfiera el Total a nuestra cuenta CUP:</p>
         <p class="h5">
             <span id="accountNumber" style="cursor: pointer;">
-                <strong>9225 9090 8776 5432</strong>
+                <strong>9204 0699 9818 9625</strong>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
                 </svg>
@@ -368,8 +387,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Información de contacto para soporte...</p>
+			<div>
+                <a class="contactSuport" href="#">Ir a Telegram</a>            
+			</div>
+			<div>
+                <a class="contactSuport" href="#">Ir a WhatsApp</a>
             </div>
+			</div>
         </div>
     </div>
 </div>
@@ -383,7 +407,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Invitanos un cafe y nos ayudaras a crecer...</p>
+                <p>Invitanos un cafe y nos ayudaras a crecer</p>
+				
+        		
+        <p class="h5">
+            <span id="accountNumber" style="cursor: pointer;">
+                <strong>9204 0699 9818 9625</strong>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                </svg>
+            </span>
+        </p>
+   
             </div>
         </div>
     </div>

@@ -21,34 +21,43 @@ let cartItems = [];
             new bootstrap.Modal(document.getElementById('detailsModal')).show();
         }
 
-        function viewCart() {
-            const cartModalBody = document.getElementById('cartModalBody');
-            if (cartItems.length > 0) {
-                let cartHTML = '';
-                let total = 0;
-                cartItems.forEach(item => {
-                    let itemTotal = item.quantity * item.price;
-                    total += itemTotal;
-                    cartHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <strong>${item.name}</strong> - $${item.price.toFixed(2)} x ${item.quantity}
-                            </div>
-                            <div class="cart-item-actions">
-                                <button onclick="changeQuantity('${item.name}', 1)" class="btn btn-sm btn-primary">+</button>
-                                <button onclick="changeQuantity('${item.name}', -1)" class="btn btn-sm btn-danger">-</button>
-                                <button onclick="removeFromCart('${item.name}')" class="btn btn-sm btn-warning">Eliminar</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                cartHTML += `<div class="cart-total">Total a pagar: $${total.toFixed(2)}</div>`;
-                cartModalBody.innerHTML = cartHTML;
-            } else {
-                cartModalBody.innerHTML = 'No hay productos en el carrito.';
-            }
-            $('#cartModal').modal('show');
+       function viewCart() {
+    const cartModalBody = document.getElementById('cartModalBody');
+    if (cartItems.length > 0) {
+        let cartHTML = '';
+        let subtotal = 0;
+        cartItems.forEach(item => {
+            let itemTotal = item.quantity * item.price;
+            subtotal += itemTotal;
+            cartHTML += `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <strong>${item.name}</strong> - $${item.price.toFixed(2)} x ${item.quantity}
+                    </div>
+                    <div class="cart-item-actions">
+                        <button onclick="changeQuantity('${item.name}', 1)" class="btn btn-sm btn-primary">+</button>
+                        <button onclick="changeQuantity('${item.name}', -1)" class="btn btn-sm btn-danger">-</button>
+                        <button onclick="removeFromCart('${item.name}')" class="btn btn-sm btn-warning">Eliminar</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        let deliveryCost = subtotal <= 400 ? 200 : 0;
+        let total = subtotal + deliveryCost;
+
+        cartHTML += `<div class="cart-subtotal">Subtotal: $${subtotal.toFixed(2)}</div>`;
+        if (deliveryCost > 0) {
+            cartHTML += `<div class="cart-delivery">Costo por domicilio: $${deliveryCost.toFixed(2)}</div>`;
         }
+        cartHTML += `<div class="cart-total">Total a pagar: $${total.toFixed(2)}</div>`;
+
+        cartModalBody.innerHTML = cartHTML;
+    } else {
+        cartModalBody.innerHTML = 'No hay productos en el carrito.';
+    }
+    $('#cartModal').modal('show');
+}
 
         function changeQuantity(productName, change) {
             let item = cartItems.find(item => item.name === productName);
@@ -70,11 +79,20 @@ let cartItems = [];
         }
 
         function showPaymentModal() {
-            $('#cartModal').modal('hide');
-            let total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-            document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
-            $('#paymentModal').modal('show');
-        }
+    $('#cartModal').modal('hide');
+    let subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let deliveryCost = subtotal <= 400 ? 200 : 0;
+    let total = subtotal + deliveryCost;
+
+    let paymentDetails = `Subtotal: $${subtotal.toFixed(2)}`;
+    if (deliveryCost > 0) {
+        paymentDetails += `<br>Costo por domicilio: $${deliveryCost.toFixed(2)}<br>`;
+    }
+    paymentDetails += `<br>Total a pagar: $${total.toFixed(2)}`;
+
+    document.getElementById('totalAmount').innerHTML = paymentDetails;
+    $('#paymentModal').modal('show');
+}
 
         document.getElementById('accountNumber').addEventListener('click', function() {
             navigator.clipboard.writeText(this.textContent.trim()).then(() => {

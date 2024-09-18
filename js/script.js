@@ -155,6 +155,17 @@ function toggleSpinner(show) {
     spinner.style.display = show ? 'flex' : 'none';
 }
 
+// Función para generar un código único
+function generateUniqueCode() {
+    const now = new Date();
+    return now.getFullYear().toString().substr(-2) +
+           (now.getMonth() + 1).toString().padStart(2, '0') +
+           now.getDate().toString().padStart(2, '0') +
+           now.getHours().toString().padStart(2, '0') +
+           now.getMinutes().toString().padStart(2, '0') +
+           now.getSeconds().toString().padStart(2, '0');
+}
+
 // Función modificada para enviar el pedido
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
@@ -164,6 +175,7 @@ async function submitOrder() {
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
         const reference = document.getElementById('reference').value;
+        const deliveryTime = document.getElementById('deliveryTime').value;
         const transactionSMS = document.getElementById('transactionSMS').value;
 
         let orderDetails = `🛒 NUEVO PEDIDO\n\n`;
@@ -171,6 +183,7 @@ async function submitOrder() {
         orderDetails += `📞 Teléfono: ${phone}\n`;
         orderDetails += `🏠 Dirección: ${address}\n`;
         orderDetails += `🚩 Punto de referencia: ${reference}\n`;
+        orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n`;
         orderDetails += `💳 SMS de transacción: ${transactionSMS}\n\n`;
         orderDetails += `📦 Productos:\n`;
 
@@ -182,6 +195,10 @@ async function submitOrder() {
         });
 
         orderDetails += `\n💰 Total a pagar: $${total.toFixed(2)}`;
+
+        // Agregar el código único al final del mensaje
+        const uniqueCode = generateUniqueCode();
+        orderDetails += `\n\nCódigo: ${uniqueCode}`;
 
         try {
             const success = await sendToTelegram(orderDetails);

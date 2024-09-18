@@ -81,6 +81,11 @@ let cartItems = [];
                 showNotification('Número de cuenta copiado al portapapeles', 'success');
             });
         });
+		 document.getElementById('celNumber').addEventListener('click', function() {
+            navigator.clipboard.writeText(this.textContent.trim()).then(() => {
+                showNotification('Número de celular copiado al portapapeles', 'success');
+            });
+        });
 
        // Configuración de Telegram
 const BOT_TOKEN = '6998902940:AAHWICrBuD2ROmUjuvd8IIHWWECv9s_-CEY';

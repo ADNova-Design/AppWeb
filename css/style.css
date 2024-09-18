@@ -28,6 +28,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    width: auto;
 }
 
 .product:hover {
@@ -226,4 +227,104 @@
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: #ff5722 !important;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+	padding: 5% 0 0 30%;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-light .navbar-toggler {
+    border-color: rgba(255,255,255,.5);
+}
+
+/* Estilos para el navbar */
+.navbar {
+    background-color: #ff5722 !important;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .nav-link {
+    color: #fff !important;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-light .navbar-toggler {
+    border-color: rgba(255,255,255,.5);
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .navbar {	
+
+}
+
+body.dark-mode .product {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-mode h3 {
+    color: white;
+}
+
+body.dark-mode .btn-details {
+    background-color: #555;
+    color: #fff;
+}
+
+body.dark-mode .modal-content {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+body.dark-mode .form-control {
+    background-color: #555;
+    color: #fff;
+    border-color: #777;
+}
+
+body.dark-mode .form-control:focus {
+    background-color: #666;
+    color: #fff;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #666;
+    border-color: #777;
+}
+
+
+/* Estilos adicionales para mejorar la legibilidad */
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link:focus {
+    color: #fff !important;
+    background-color: rgba(255,255,255,0.1);
+}
+
+body.dark-mode .navbar-light .navbar-nav .nav-link:hover,
+body.dark-mode .navbar-light .navbar-nav .nav-link:focus {
+    background-color: rgba(0,0,0,0.1);
 }

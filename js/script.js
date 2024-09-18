@@ -200,3 +200,25 @@ async function submitOrder() {
 }
 	
 	
+	
+document.addEventListener('DOMContentLoaded', (event) => {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Comprobar si el modo oscuro estaba activado anteriormente
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark-mode');
+        darkModeToggle.textContent = 'Modo Claro';
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            darkModeToggle.textContent = 'Modo Claro';
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            darkModeToggle.textContent = 'Modo Oscuro';
+            localStorage.setItem('darkMode', null);
+        }
+    });
+});

@@ -71,9 +71,18 @@
 				
             </ul>
         </div>
+		
     </div>
+	
+<div class="navbar-nav ms-auto">
+            <!-- Agrega esto justo antes del cierre del div -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="userProfileIcon">
+                    <i id="personalicon" class="bi bi-person-circle"></i>
+                </a>
+            </li>
+        </div>
 </nav>
-
 
 <div class="header">
     <h1>Bienvenido a nuestra Pizzería</h1>
@@ -81,52 +90,118 @@
 
 <div class="container">
     <div class="category">
-        <h2>Pizzas</h2>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/PZZ1.png" alt="Pizza con Salchichas">
-                <h3>Pizza con Salchichas</h3>
-                <div class="price-container">
-                    <span class="old-price">$170.00</span>
-                    <span class="new-price">$130.45</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Pizza con Salchichas', 'Deliciosa pizza con salsa de tomate, queso fresco y salchichas.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Pizza con Salchichas', 130.45)">Agregar al carrito</button>
+    <h2>Pizzas</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/PZZ1.png" alt="Pizza con Salchichas">
+            <h3>Pizza con Salchichas</h3>
+            <div class="price-container">
+                <span class="old-price">$170.00</span>
+                <span class="new-price">$130.45</span>
             </div>
-			<div class="col-md-6 col-lg-4 product">
-                <img src="img/ph.png" alt="Pizza Hawaiana">
-                <h3>Pizza Hawaiana</h3>
-                <div class="price-container">
-                    <span class="old-price">$190.00</span>
-                    <span class="new-price">$160.45</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Pizza Hawaiana', 'Deliciosa pizza con salsa de tomate, queso fresco y fruta.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Pizza Hawaiana', 160.45)">Agregar al carrito</button>
+            <button class="btn btn-details" onclick="showDetails('Pizza con Salchichas', 'Deliciosa pizza con salsa de tomate, queso fresco y salchichas.', 'img/PZZ1.png', ['Salsa de tomate', 'Queso fresco', 'Salchichas'])">Detalles</button>
+            <button class="btn" onclick="addToCart('Pizza con Salchichas', 130.45)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/ph.png" alt="Pizza Hawaiana">
+            <h3>Pizza Hawaiana</h3>
+            <div class="price-container">
+                <span class="old-price">$190.00</span>
+                <span class="new-price">$160.45</span>
             </div>
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/PZZ4.png" alt="Pizza Napolitana">
-                <h3>Pizza Napolitana</h3>
-                <div class="price-container">
-                    <span class="old-price">$150.00</span>
-                    <span class="new-price">$120.50</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Pizza Napolitana', 'Clásica pizza con salsa de tomate y queso fresco.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Pizza Napolitana', 120.50)">Agregar al carrito</button>
+            <button class="btn btn-details" onclick="showDetails('Pizza Hawaiana', 'Deliciosa pizza con salsa de tomate, queso fresco y fruta.', 'img/ph.png', ['Salsa de tomate', 'Queso fresco', 'Fruta'])">Detalles</button>
+            <button class="btn" onclick="addToCart('Pizza Hawaiana', 160.45)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/PZZ4.png" alt="Pizza Napolitana">
+            <h3>Pizza Napolitana</h3>
+            <div class="price-container">
+                <span class="old-price">$150.00</span>
+                <span class="new-price">$120.50</span>
             </div>
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/PZZ3.png" alt="Pizza con Pimientos">
-                <h3>Pizza con Pimientos</h3>
-                <div class="price-container">
-                    <span class="old-price">$145.00</span>
-                    <span class="new-price">$120.50</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Pizza con Pimientos', 'Pizza llena de pimientos asados, queso y salsa de tomate.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Pizza con Pimientos', 120.50)">Agregar al carrito</button>
+            <button class="btn btn-details" onclick="showDetails('Pizza Napolitana', 'Clásica pizza con salsa de tomate y queso fresco.', 'img/PZZ4.png', ['Salsa de tomate', 'Queso fresco'])">Detalles</button>
+            <button class="btn" onclick="addToCart('Pizza Napolitana', 120.50)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/PZZ3.png" alt="Pizza con Pimientos">
+            <h3>Pizza con Pimientos</h3>
+            <div class="price-container">
+                <span class="old-price">$145.00</span>
+                <span class="new-price">$120.50</span>
             </div>
+            <button class="btn btn-details" onclick="showDetails('Pizza con Pimientos', 'Pizza llena de pimientos asados, queso y salsa de tomate.', 'img/PZZ3.png', ['Pimientos asados', 'Queso', 'Salsa de tomate'])">Detalles</button>
+            <button class="btn" onclick="addToCart('Pizza con Pimientos', 120.50)">Agregar al carrito</button>
         </div>
     </div>
+</div>   
 
-    <div class="category">
+   <div class="category">
+    <h2>Bebidas</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/pn.png" alt="Refresco de Naranja">
+            <h3>Refresco de Naranja</h3>
+            <div class="price-container">
+                <span class="old-price">$300.00</span>
+                <span class="new-price">$249.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Refresco de Naranja', 'Pomo de refresco gaseado con sabor a naranja.', 'img/pn.png', '1.5 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Refresco de Naranja', 249.99)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/pl.png" alt="Refresco de Limon">
+            <h3>Refresco de Limon</h3>
+            <div class="price-container">
+                <span class="old-price">$300.00</span>
+                <span class="new-price">$249.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Refresco de Limon', 'Pomo de refresco gaseado con sabor a limon.' , 'img/pl.png', '1.5 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Refresco de Limon', 249.99)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/pc.png" alt="Refresco de Cola">
+            <h3>Refresco de Cola</h3>
+            <div class="price-container">
+                <span class="old-price">$300.00</span>
+                <span class="new-price">$249.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Refresco de Cola', 'Pomo de refresco gaseado con sabor a cola.', 'img/pc.png', '1.5 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Refresco de Cola', 249.99)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/zm.png" alt="Zuko de Manzana">
+            <h3>Zuko de Manzana</h3>
+            <div class="price-container">
+                <span class="old-price">$50.00</span>
+                <span class="new-price">$39.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Zuko de Manzana', 'Sobre de polvo de refresco con sabor a manzana', 'img/zm.png', '2 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Zuko de Manzana', 39.99)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/zn.png" alt="Zuko de Naranja">
+            <h3>Zuko de Naranja</h3>
+            <div class="price-container">
+                <span class="old-price">$50.00</span>
+                <span class="new-price">$39.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Zuko de Naranja', 'Sobre de polvo de refresco con sabor a naranja.', 'img/zn.png', '2 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Zuko de Naranja', 39.99)">Agregar al carrito</button>
+        </div>
+        <div class="col-md-6 col-lg-4 product">
+            <img src="img/zl.png" alt="Zuko de Limon">
+            <h3>Zuko de Limon</h3>
+            <div class="price-container">
+                <span class="old-price">$50.00</span>
+                <span class="new-price">$39.99</span>
+            </div>
+            <button class="btn btn-details" onclick="showDetails('Zuko de Limon', 'Sobre de polvo de refresco con sabor a limon.', 'img/zl.png', '2 Litros')">Detalles</button>
+            <button class="btn" onclick="addToCart('Zuko de Limon', 39.99)">Agregar al carrito</button>
+        </div>
+    </div>
+</div>
+	
+	<div class="category">
         <h2>Pastas</h2>
         <div class="row">
             <div class="col-md-6 col-lg-4 product">
@@ -156,74 +231,8 @@
                     <span class="old-price">$12.00</span>
                     <span class="new-price">$10.00</span>
                 </div>
-                <button class="btn btn-details" onclick="showDetails('Fettuccine Alfredo', 'Pasta fettuccine en una cremosa salsa de queso parmesano y mantequilla.')">Detalles</button>
+                <button class="btn btn-details" onclick="showDetails('Fettuccine Alfredo', 'Pasta fettuccine en una cremosa salsa de queso parmesano y mantequilla.', 'img/pc.png')">Detalles</button>
                 <button class="btn" onclick="addToCart('Fettuccine Alfredo', 10.00)">Agregar al carrito</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="category">
-        <h2>Bebidas</h2>
-        <div class="row">
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/pn.png" alt="Refresco de Naranja">
-                <h3>Refresco de Naranja</h3>
-                <div class="price-container">
-                    <span class="old-price">$300.00</span>
-                    <span class="new-price">$249.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Refresco de Naranja', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Refresco de Naranja', 249.99)">Agregar al carrito</button>
-            </div>
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/pl.png" alt="Refresco de Limon">
-                <h3>Refresco de Limon</h3>
-                <div class="price-container">
-                    <span class="old-price">$300.00</span>
-                    <span class="new-price">$249.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Refresco de Limon', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Refresco de Limon', 249.99)">Agregar al carrito</button>
-            </div>
-            <div class="col-md-6 col-lg-4 product">
-                <img src="img/pc.png" alt="Refresco de Cola">
-                <h3>Refresco de Cola</h3>
-                <div class="price-container">
-                    <span class="old-price">$300.00</span>
-                    <span class="new-price">$249.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Refresco de Cola', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Refresco de Cola', 249.99)">Agregar al carrito</button>
-            </div>
-			<div class="col-md-6 col-lg-4 product">
-                <img src="img/zm.png" alt="Zuko de Manzana">
-                <h3>Zuko de Manzana</h3>
-                <div class="price-container">
-                    <span class="old-price">$50.00</span>
-                    <span class="new-price">$39.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Zuko de Manzana', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Zuko de Manzana', 39.99)">Agregar al carrito</button>
-            </div>
-			<div class="col-md-6 col-lg-4 product">
-                <img src="img/zn.png" alt="Zuko de Naranja">
-                <h3>Zuko de Naranja</h3>
-                <div class="price-container">
-                    <span class="old-price">$50.00</span>
-                    <span class="new-price">$39.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Zuko de Naranja', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Zuko de Naranja', 39.99)">Agregar al carrito</button>
-            </div>
-			<div class="col-md-6 col-lg-4 product">
-                <img src="img/zl.png" alt="Zuko de Limon">
-                <h3>Zuko de Limon</h3>
-                <div class="price-container">
-                    <span class="old-price">$50.00</span>
-                    <span class="new-price">$39.99</span>
-                </div>
-                <button class="btn btn-details" onclick="showDetails('Zuko de Limon', 'Variedad de refrescos fríos.')">Detalles</button>
-                <button class="btn" onclick="addToCart('Zuko de Limon', 39.99)">Agregar al carrito</button>
             </div>
         </div>
     </div>
@@ -250,6 +259,39 @@
             </div>
         </div>
     </div>
+<!-- Modal de Perfil de Usuario -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userProfileModalLabel">Perfil de Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="userProfileForm">
+				<p>Todos los datos son almacenados localmente en su dispositivo.</p>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Nombre y Apellidos</label>
+                        <input type="text" class="form-control" id="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Dirección y entre calles</label>
+                        <input type="text" class="form-control" id="address" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="saveUserProfile">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <!-- Modal del Carrito -->
 <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">

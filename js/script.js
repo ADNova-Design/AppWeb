@@ -42,8 +42,9 @@ let cartItems = [];
                 </div>
             `;
         });
+ 
 
-        let deliveryCost = subtotal <= 400 ? 200 : 0;
+         let deliveryCost = subtotal <= 400 ? 200 : 0;
         let total = subtotal + deliveryCost;
 
         cartHTML += `<div class="cart-subtotal">Subtotal: $${subtotal.toFixed(2)}</div>`;
@@ -92,7 +93,7 @@ let cartItems = [];
 
     document.getElementById('totalAmount').innerHTML = paymentDetails;
     $('#paymentModal').modal('show');
-}
+} 
 
         document.getElementById('accountNumber').addEventListener('click', function() {
             navigator.clipboard.writeText(this.textContent.trim()).then(() => {
@@ -104,6 +105,87 @@ let cartItems = [];
                 showNotification('Número de celular copiado al portapapeles', 'success');
             });
         });
+		
+		
+// Agregar esto al final del archivo script.js
+
+document.addEventListener('DOMContentLoaded', function() {
+    const userProfileIcon = document.getElementById('userProfileIcon');
+    const userProfileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
+    const saveUserProfileBtn = document.getElementById('saveUserProfile');
+
+    // Cargar datos del usuario si existen
+    loadUserProfile();
+
+    userProfileIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        userProfileModal.show();
+    });
+
+    saveUserProfileBtn.addEventListener('click', function() {
+        saveUserProfile();
+        userProfileModal.hide();
+    });
+
+    function saveUserProfile() {
+        const fullName = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        const userProfile = {
+            fullName: fullName,
+            phone: phone,
+            address: address
+        };
+
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        showNotification('Perfil guardado correctamente', 'success');
+    }
+
+    function loadUserProfile() {
+    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+    if (userProfile) {
+        document.getElementById('fullName').value = userProfile.fullName || '';
+        document.getElementById('phone').value = userProfile.phone || '';
+        document.getElementById('address').value = userProfile.address || '';
+
+        // Autollenado de los campos del pago
+        const paymentForm = document.getElementById('paymentForm');
+        const fullNameInput = paymentForm.querySelector('input[id="fullName"]');
+        const phoneInput = paymentForm.querySelector('input[id="phone"]');
+        const addressInput = paymentForm.querySelector('input[id="address"]');
+
+        fullNameInput.value = userProfile.fullName || '';
+        phoneInput.value = userProfile.phone || '';
+        addressInput.value = userProfile.address || '';
+    }
+}
+});
+
+
+function showDetails(productName, productDescription, productImage, details) {
+    let html = `
+        <img src="${productImage}" alt="${productName}">
+        <strong>${productName}</strong>
+        <p>${productDescription}</p>
+    `;
+
+    if (Array.isArray(details)) {
+        html += `
+            <ul>
+                ${details.map(detail => `<li>${detail}</li>`).join('')}
+            </ul>
+        `;
+    } else if (typeof details === 'string' && details.includes('Litros')) {
+        html += `
+            <p>Volume: ${details}</p>
+        `;
+    }
+
+    document.getElementById('modalBody').innerHTML = html;
+    new bootstrap.Modal(document.getElementById('detailsModal')).show();
+}
+
 
        // Configuración de Telegram
 const BOT_TOKEN = '6998902940:AAHWICrBuD2ROmUjuvd8IIHWWECv9s_-CEY';
@@ -184,10 +266,9 @@ function generateUniqueCode() {
            now.getSeconds().toString().padStart(2, '0');
 }
 
-// Función modificada para enviar el pedido
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
-        toggleSpinner(true); // Mostrar el spinner
+        toggleSpinner(true);
 
         const fullName = document.getElementById('fullName').value;
         const phone = document.getElementById('phone').value;
@@ -206,22 +287,39 @@ async function submitOrder() {
         orderDetails += `📦 Productos:\n`;
 
         let total = 0;
+        let productsDetails = '';
         cartItems.forEach(item => {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
+            productsDetails += `${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}\n`;
             orderDetails += `- ${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}\n`;
         });
 
-        orderDetails += `\n💰 Total a pagar: $${total.toFixed(2)}`;
+        let deliveryCost = total <= 400 ? 200 : 0;
+        if (deliveryCost > 0) {
+            orderDetails += `\n💰 Costo por domicilio: $${deliveryCost.toFixed(2)}`;
+        }
 
-        // Agregar el código único al final del mensaje
+        orderDetails += `\n💰 Total a pagar: $${(total + deliveryCost).toFixed(2)}`;
+
         const uniqueCode = generateUniqueCode();
         orderDetails += `\n\nCódigo: ${uniqueCode}`;
 
         try {
-            const success = await sendToTelegram(orderDetails);
+            const telegramSuccess = await sendToTelegram(orderDetails);
+            const sheetSuccess = await sendToGoogleSheet({
+                code: uniqueCode,
+                fullName,
+                phone,
+                address,
+                reference,
+                deliveryTime,
+                transactionSMS,
+                products: productsDetails,
+                total: (total + deliveryCost).toFixed(2)
+            });
 
-            if (success) {
+            if (telegramSuccess && sheetSuccess) {
                 showNotification('¡Pedido realizado con éxito!', 'success');
                 $('#paymentModal').modal('hide');
                 cartItems = [];
@@ -232,12 +330,34 @@ async function submitOrder() {
         } catch (error) {
             showNotification('Error al enviar el pedido. Por favor, inténtelo de nuevo.', 'error');
         } finally {
-            toggleSpinner(false); // Ocultar el spinner
+            toggleSpinner(false);
         }
     } else {
         showNotification('Por favor, complete todos los campos requeridos.', 'error');
     }
 }
+
+async function sendToGoogleSheet(data) {
+    const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwou48km1rmAPVmAsXVKODSceR5v9EYodUoVm/exec';
+    try {
+        const response = await fetch(SHEET_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            mode: 'no-cors' // Añade esta línea
+        });
+
+        // Debido a 'no-cors', no podemos verificar la respuesta directamente
+        // Asumimos que fue exitoso si no hubo errores
+        return true;
+    } catch (error) {
+        console.error('Error al enviar datos a Google Sheet:', error);
+        return false;
+    }
+}
+
 	
 	
 	document.addEventListener('DOMContentLoaded', (event) => {
@@ -279,7 +399,7 @@ async function submitOrder() {
     });
 });
 
-
+ // SOPORTE POR WHATSAPP
 document.querySelector('.contactSuport').addEventListener('click', function(e) {
     var appUrl = this.href;
     var webUrl = 'https://web.whatsapp.com/send?phone=18632541732'; // URL de respaldo
@@ -290,5 +410,24 @@ document.querySelector('.contactSuport').addEventListener('click', function(e) {
         if (end - start < 1500) {
             window.location = webUrl;
         }
-    }, 1000);
+    }, 1500);
+});
+
+// SOPORTE POR TELEGRAM
+document.getElementById('telegramLink').addEventListener('click', function(e) {
+    e.preventDefault();
+    var appUrl = 'tg://join?invite=TnCwk8_IVcAyNDNh';
+    var webUrl = 'https://t.me/+TnCwk8_IVcAyNDNh';
+
+    // Intenta abrir la aplicación
+    window.location = appUrl;
+
+    // Si la aplicación no se abre después de un segundo, redirige a la versión web
+    setTimeout(function() {
+        if (document.hidden || document.webkitHidden) {
+            // La aplicación se abrió
+        } else {
+            window.location = webUrl;
+        }
+    }, 1500);
 });

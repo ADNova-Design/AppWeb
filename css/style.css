@@ -432,9 +432,6 @@ button #userProfileIcon{
 /*SWICH*/
 
 
-
-
-
 /* Estilos para el modo oscuro */
 body.dark-mode {
     background-color: #333;
@@ -606,4 +603,24 @@ input[type=time]::-webkit-clear-button {
 /* Up/Down arrows for incrementing/decrementing the value */
 input[type=time]::-webkit-inner-spin-button {
   display: none;
+}
+
+
+@media (max-width: 300px) {
+    .row {
+        flex-direction: column;
+    }
+    .col-md-6, .col-lg-4 {
+        flex-basis: 100%;
+    }
+    .product {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 300px) {
+    .product {
+        width: 80%;
+        margin: 20px auto;
+    }
 }

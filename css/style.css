@@ -120,8 +120,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 15%;
-    height: auto;
+    
     transition: background-color 0.3s;
 }
         .floating-cart:hover {
@@ -163,11 +162,23 @@
 			font-size: 20px;
         }
         .modal-dialog {
-            max-width: 500px;
-            margin: auto;
-            position: relative;
-            top: 25%; /* Mueve la ventana modal un 25% desde la parte superior */
-        }
+			max-width: 500px;
+			margin: auto;
+			position: absolute;
+			top: 0; /* Cambia el valor de top a 0 */
+			left: 0;
+			right: 0;
+			transform: translate(0, 0); /* Agrega esta línea para centrar horizontalmente */
+		}
+		
+		@media (max-width: 768px) {
+		.modal-dialog {
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: translate(0, 0);
+		}
+		}
         .modal-header, .modal-footer {
             border: none;
         }
@@ -339,7 +350,6 @@ border-color: transparent;
         right: 30px;
     }
 }
-
 	
 button #userProfileIcon{
 	border: none;
@@ -348,8 +358,8 @@ button #userProfileIcon{
 #userProfileIcon:hover{
 	background: none;
 	color: white;
-
 }
+
 /* Estilos para el botón de perfil en el navbar */
 .navbar-nav.ms-auto .user-profile-icon {
     font-size: 2.5rem;
@@ -396,6 +406,29 @@ button #userProfileIcon{
     color: white;
     text-decoration: none;	
 }
+
+.modal {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    z-index: 1055;
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.modal-backdrop.show {
+  backdrop-filter: blur(5px);
+  background-color: #333;
+}
+
+.modal-backdrop {
+  transition: backdrop-filter 0.3s;
+}
+
 
 
 /* Estilos para el modo oscuro */
@@ -447,7 +480,6 @@ body.dark-mode .btn-secondary {
     border-color: #777;
 }
 
-
 /* Estilos adicionales para mejorar la legibilidad */
 .navbar-light .navbar-nav .nav-link:hover,
 .navbar-light .navbar-nav .nav-link:focus {
@@ -462,5 +494,51 @@ body.dark-mode .navbar-light .navbar-nav .nav-link:focus {
 
 li .nav-item{
 	width: auto;
-	
+}
+
+
+input[type=time] {
+  border: none;
+  font-family: helvetica;
+}
+
+/* Wrapper around the hour, minute, second, and am/pm fields as well as 
+the up and down buttons and the 'X' button */
+input[type=time]::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+}
+
+/* The space between the fields - between hour and minute, the minute and 
+second, second and am/pm */
+input[type=time]::-webkit-datetime-edit-text {
+  padding: 19px 4px;
+}
+
+/* The naming convention for the hour, minute, second, and am/pm field is
+`-webkit-datetime-edit-{field}-field` */
+
+/* Hour */
+input[type=time]::-webkit-datetime-edit-hour-field {
+  padding: 19px 13px;
+}
+
+/* Minute */
+input[type=time]::-webkit-datetime-edit-minute-field {
+  
+  padding: 19px 13px;
+}
+
+/* AM/PM */
+input[type=time]::-webkit-datetime-edit-ampm-field {
+  padding: 19px 13px;
+}
+
+/* 'X' button for resetting/clearing time */
+input[type=time]::-webkit-clear-button {
+  display: none;
+}
+
+/* Up/Down arrows for incrementing/decrementing the value */
+input[type=time]::-webkit-inner-spin-button {
+  display: none;
 }

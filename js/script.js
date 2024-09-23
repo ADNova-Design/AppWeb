@@ -270,12 +270,19 @@ async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
         toggleSpinner(true);
 
-        const fullName = document.getElementById('fullName').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
-        const reference = document.getElementById('reference').value;
-        const deliveryTime = document.getElementById('deliveryTime').value;
-        const transactionSMS = document.getElementById('transactionSMS').value;
+        const fullNameInput = document.getElementById('paymentForm').querySelector('input[id="fullName"]');
+        const phoneInput = document.getElementById('paymentForm').querySelector('input[id="phone"]');
+        const addressInput = document.getElementById('paymentForm').querySelector('input[id="address"]');
+        const referenceInput = document.getElementById('paymentForm').querySelector('input[id="reference"]');
+        const deliveryTimeInput = document.getElementById('paymentForm').querySelector('input[id="deliveryTime"]');
+        const transactionSMSInput = document.getElementById('paymentForm').querySelector('input[id="transactionSMS"]');
+
+        const fullName = fullNameInput.value;
+        const phone = phoneInput.value;
+        const address = addressInput.value;
+        const reference = referenceInput.value;
+        const deliveryTime = deliveryTimeInput.value;
+        const transactionSMS = transactionSMSInput.value;
 
         let orderDetails = `🛒 NUEVO PEDIDO\n\n`;
         orderDetails += `👤 Nombre: #${fullName}\n`;
@@ -307,19 +314,7 @@ async function submitOrder() {
 
         try {
             const telegramSuccess = await sendToTelegram(orderDetails);
-            const sheetSuccess = await sendToGoogleSheet({
-                code: uniqueCode,
-                fullName,
-                phone,
-                address,
-                reference,
-                deliveryTime,
-                transactionSMS,
-                products: productsDetails,
-                total: (total + deliveryCost).toFixed(2)
-            });
-
-            if (telegramSuccess && sheetSuccess) {
+            if (telegramSuccess) {
                 showNotification('¡Pedido realizado con éxito!', 'success');
                 $('#paymentModal').modal('hide');
                 cartItems = [];
@@ -336,7 +331,6 @@ async function submitOrder() {
         showNotification('Por favor, complete todos los campos requeridos.', 'error');
     }
 }
-
 async function sendToGoogleSheet(data) {
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwou48km1rmAPVmAsXVKODSceR5v9EYodUoVm/exec';
     try {
@@ -349,15 +343,13 @@ async function sendToGoogleSheet(data) {
             mode: 'no-cors' // Añade esta línea
         });
 
-        // Debido a 'no-cors', no podemos verificar la respuesta directamente
-        // Asumimos que fue exitoso si no hubo errores
+        // No mostrar mensaje de envío exitoso
         return true;
     } catch (error) {
         console.error('Error al enviar datos a Google Sheet:', error);
         return false;
     }
 }
-
 	
 	
 	document.addEventListener('DOMContentLoaded', (event) => {
@@ -431,3 +423,5 @@ document.getElementById('telegramLink').addEventListener('click', function(e) {
         }
     }, 1500);
 });
+
+

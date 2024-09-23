@@ -393,13 +393,12 @@ async function sendToGoogleSheet(data) {
         return false;
     }
 }
-	
 	document.getElementById('payWithDelivery').addEventListener('change', function() {
-    const paymentDetails = document.getElementById('paymentDetails');
+    const transactionSMSInput = document.getElementById('transactionSMS');
     if (this.checked) {
-        paymentDetails.style.display = 'none';
+        transactionSMSInput.disabled = true;
     } else {
-        paymentDetails.style.display = 'block';
+        transactionSMSInput.disabled = false;
     }
 });
 	

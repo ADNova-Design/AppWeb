@@ -298,7 +298,6 @@ function generateUniqueCode() {
            now.getSeconds().toString().padStart(2, '0');
 }
 
-
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
         toggleSpinner(true);
@@ -307,7 +306,9 @@ async function submitOrder() {
         const phoneInput = document.getElementById('paymentForm').querySelector('input[id="phone"]');
         const addressInput = document.getElementById('paymentForm').querySelector('input[id="address"]');
         const referenceInput = document.getElementById('paymentForm').querySelector('input[id="reference"]');
-        const deliveryTimeInput = document.getElementById('paymentForm').querySelector('input[id="deliveryTime"]');
+        const deliveryHourInput = document.getElementById('paymentForm').querySelector('input[id="deliveryHour"]');
+        const deliveryMinuteInput = document.getElementById('paymentForm').querySelector('input[id="deliveryMinute"]');
+        const deliveryPeriodInput = document.getElementById('paymentForm').querySelector('select[id="deliveryPeriod"]');
         const transactionSMSInput = document.getElementById('paymentForm').querySelector('input[id="transactionSMS"]');
         const payWithDeliveryInput = document.getElementById('payWithDelivery');
 
@@ -315,7 +316,7 @@ async function submitOrder() {
         const phone = phoneInput.value;
         const address = addressInput.value;
         const reference = referenceInput.value;
-        const deliveryTime = deliveryTimeInput.value;
+        const deliveryTime = `${deliveryHourInput.value}:${deliveryMinuteInput.value} ${deliveryPeriodInput.value}`;
         const transactionSMS = transactionSMSInput.value;
         const payWithDelivery = payWithDeliveryInput.checked;
 
@@ -486,3 +487,19 @@ document.getElementById('telegramLink').addEventListener('click', function(e) {
     }, 1500);
 });
 
+
+// Agregar evento de clic a los botones de cerrar
+document.querySelectorAll('.btn-close').forEach(button => {
+    button.addEventListener('click', () => {
+        // Obtener el modal padre
+        const modal = button.closest('.modal');
+        // Ocultar el modal
+        modal.classList.remove('show');
+        // Eliminar el atributo aria-hidden
+        modal.setAttribute('aria-hidden', 'true');
+        // Eliminar el atributo style
+        modal.removeAttribute('style');
+        // Eliminar el atributo tabindex
+        modal.removeAttribute('tabindex');
+    });
+});

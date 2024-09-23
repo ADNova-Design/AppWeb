@@ -79,7 +79,7 @@ let cartItems = [];
             showNotification(`${productName} eliminado del carrito`, 'success');
         }
 
-        function showPaymentModal() {
+       function showPaymentModal() {
     $('#cartModal').modal('hide');
     let subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
     let deliveryCost = subtotal <= 400 ? 200 : 0;
@@ -91,21 +91,53 @@ let cartItems = [];
     }
     paymentDetails += `<br>Total a pagar: $${total.toFixed(2)}`;
 
-    document.getElementById('totalAmount').innerHTML = paymentDetails;
-    $('#paymentModal').modal('show');
-} 
+    document.getElementById('paymentAmount').innerHTML = `<p><strong>${paymentDetails}</strong></p>`;
 
-        document.getElementById('accountNumber').addEventListener('click', function() {
-            navigator.clipboard.writeText(this.textContent.trim()).then(() => {
-                showNotification('Número de cuenta copiado al portapapeles', 'success');
-            });
-        });
-		 document.getElementById('celNumber').addEventListener('click', function() {
-            navigator.clipboard.writeText(this.textContent.trim()).then(() => {
-                showNotification('Número de celular copiado al portapapeles', 'success');
-            });
-        });
+    // Ocultar o mostrar los elementos según el estado del switch
+    const payWithDeliveryInput = document.getElementById('payWithDelivery');
+    const celNumberDiv = document.querySelector('div.mb-3:has(#celNumber)');
+    const transactionSMSInput = document.getElementById('transactionSMS').closest('div.mb-3');
+
+    if (payWithDeliveryInput.checked) {
+        celNumberDiv.style.display = 'none';
+        transactionSMSInput.style.display = 'none';
+    } else {
+        celNumberDiv.style.display = 'block';
+        transactionSMSInput.style.display = 'block';
+    }
+
+    $('#paymentModal').modal('show');
+}
+
+document.getElementById('payWithDelivery').addEventListener('change', function() {
+    const celNumberDiv = document.querySelector('div.mb-3:has(#celNumber)');
+    const transactionSMSInput = document.getElementById('transactionSMS').closest('div.mb-3');
+
+    if (this.checked) {
+        celNumberDiv.style.display = 'none';
+        transactionSMSInput.style.display = 'none';
+    } else {
+        celNumberDiv.style.display = 'block';
+        transactionSMSInput.style.display = 'block';
+    }
+});
 		
+		
+		document.getElementById('payWithDelivery').addEventListener('change', function() {
+    const paymentDetailsDiv = document.getElementById('paymentDetails');
+    const celNumberDiv = document.querySelector('div.mb-3:has(#celNumber)');
+    const transactionSMSInput = document.getElementById('transactionSMS').closest('div.mb-3');
+
+    if (this.checked) {
+        paymentDetailsDiv.style.display = 'none';
+        celNumberDiv.style.display = 'none';
+        transactionSMSInput.style.display = 'none';
+    } else {
+        paymentDetailsDiv.style.display = 'block';
+        celNumberDiv.style.display = 'block';
+        transactionSMSInput.style.display = 'block';
+    }
+});
 		
 // Agregar esto al final del archivo script.js
 
@@ -266,6 +298,7 @@ function generateUniqueCode() {
            now.getSeconds().toString().padStart(2, '0');
 }
 
+
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
         toggleSpinner(true);
@@ -276,6 +309,7 @@ async function submitOrder() {
         const referenceInput = document.getElementById('paymentForm').querySelector('input[id="reference"]');
         const deliveryTimeInput = document.getElementById('paymentForm').querySelector('input[id="deliveryTime"]');
         const transactionSMSInput = document.getElementById('paymentForm').querySelector('input[id="transactionSMS"]');
+        const payWithDeliveryInput = document.getElementById('payWithDelivery');
 
         const fullName = fullNameInput.value;
         const phone = phoneInput.value;
@@ -283,14 +317,21 @@ async function submitOrder() {
         const reference = referenceInput.value;
         const deliveryTime = deliveryTimeInput.value;
         const transactionSMS = transactionSMSInput.value;
+        const payWithDelivery = payWithDeliveryInput.checked;
 
         let orderDetails = `🛒 NUEVO PEDIDO\n\n`;
         orderDetails += `👤 Nombre: #${fullName}\n`;
         orderDetails += `📞 Teléfono: ${phone}\n`;
         orderDetails += `🏠 Dirección: ${address}\n`;
         orderDetails += `🚩 Punto de referencia: ${reference}\n`;
-        orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n`;
-        orderDetails += `💳 SMS de transacción: ${transactionSMS}\n\n`;
+        orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n\n`;
+
+        if (payWithDelivery) {
+            orderDetails += `💳 Pago con la entrega\n\n`;
+        } else {
+            orderDetails += `💳 SMS de transacción: ${transactionSMS}\n\n`;
+        }
+
         orderDetails += `📦 Productos:\n`;
 
         let total = 0;
@@ -331,6 +372,8 @@ async function submitOrder() {
         showNotification('Por favor, complete todos los campos requeridos.', 'error');
     }
 }
+
+
 async function sendToGoogleSheet(data) {
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwou48km1rmAPVmAsXVKODSceR5v9EYodUoVm/exec';
     try {
@@ -351,6 +394,14 @@ async function sendToGoogleSheet(data) {
     }
 }
 	
+	document.getElementById('payWithDelivery').addEventListener('change', function() {
+    const paymentDetails = document.getElementById('paymentDetails');
+    if (this.checked) {
+        paymentDetails.style.display = 'none';
+    } else {
+        paymentDetails.style.display = 'block';
+    }
+});
 	
 	document.addEventListener('DOMContentLoaded', (event) => {
     const darkModeToggle = document.getElementById('darkModeToggle');
@@ -391,6 +442,18 @@ async function sendToGoogleSheet(data) {
     });
 });
 
+
+document.getElementById('accountNumber').addEventListener('click', function() {
+  navigator.clipboard.writeText('9204 0699 9818 9625');
+  showNotification('Número de cuenta copiado al portapapeles', 'success');
+});
+
+document.getElementById('celNumber').addEventListener('click', function() {
+  navigator.clipboard.writeText('+53 59072053');
+  showNotification('Número de teléfono copiado al portapapeles', 'success');
+});
+
+
  // SOPORTE POR WHATSAPP
 document.querySelector('.contactSuport').addEventListener('click', function(e) {
     var appUrl = this.href;
@@ -423,5 +486,4 @@ document.getElementById('telegramLink').addEventListener('click', function(e) {
         }
     }, 1500);
 });
-
 

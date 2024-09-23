@@ -1,4 +1,4 @@
- body {
+  body {
     font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -408,7 +408,7 @@ button #userProfileIcon{
 }
 
 .modal {
-    position: absolute;
+    position: fixed;
     top: -5px;
     left: 0;
     z-index: 1055;
@@ -428,6 +428,10 @@ button #userProfileIcon{
 .modal-backdrop {
   transition: backdrop-filter 0.3s;
 }
+
+/*SWICH*/
+
+
 
 
 
@@ -497,8 +501,65 @@ li .nav-item{
 }
 
 
+input[type="checkbox" i] {
+	
+    margin: 0 0 0 10px !important;
+    width: 20px !important;
+    height: 15px !important;
+    background-color: initial !important;
+    cursor: pointer !important;
+    appearance: auto !important;
+    box-sizing: border-box !important;
+    margin: 3px 3px 3px 3px !important;
+    padding: initial !important;
+    border: initial !important;
+}
+
+.payWithDelivery {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 20px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 10px !important;
+  background-color: #f7f7f7 !important;
+  cursor: pointer !important;
+}
+
+.payWithDelivery:hover {
+  background-color: #e7e7e7 !important;
+}
+
+.payWithDelivery label {
+  font-size: 16px !important;
+  font-weight: bold !important;
+  margin-right: 10px !important;
+}
+
+.payWithDelivery input[type="radio"] {
+  margin-right: 10px !important;
+}
+
+.payWithDelivery .deliveryOption {
+  display: flex !important;
+  align-items: center !important;
+  margin-right: 20px !important;
+}
+
+.payWithDelivery .deliveryOption label {
+  font-size: 14px !important;
+  margin-right: 10px !important;
+}
+
+.payWithDelivery .deliveryOption input[type="radio"] {
+  margin-right: 10px !important;
+}
+
+
 input[type=time] {
   border: none;
+  color: #2a2c2d;
+  font-size: 14px;
   font-family: helvetica;
 }
 
@@ -519,17 +580,21 @@ input[type=time]::-webkit-datetime-edit-text {
 
 /* Hour */
 input[type=time]::-webkit-datetime-edit-hour-field {
+  
+  border-radius: 15%;
   padding: 19px 13px;
 }
 
 /* Minute */
 input[type=time]::-webkit-datetime-edit-minute-field {
-  
+  border-radius: 15%;
   padding: 19px 13px;
 }
 
 /* AM/PM */
 input[type=time]::-webkit-datetime-edit-ampm-field {
+  border-radius: 15%;
+  color: #fff;
   padding: 19px 13px;
 }
 

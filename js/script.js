@@ -503,3 +503,29 @@ document.querySelectorAll('.btn-close').forEach(button => {
         modal.removeAttribute('tabindex');
     });
 });
+	function formatHour(input) {
+        let value = input.value.replace(/[^0-9]/g, ''); // Solo números
+        if (value.length > 2) value = value.slice(0, 2); // Limitar a 2 dígitos
+        
+        if (parseInt(value) > 12) value = '12'; // Limitar a 12
+        input.value = value;
+    }
+
+    function formatMinute(input) {
+        let value = input.value.replace(/[^0-9]/g, ''); // Solo números
+        if (value.length > 2) value = value.slice(0, 2); // Limitar a 2 dígitos
+        
+        if (parseInt(value) > 59) value = '59'; // Limitar a 59
+        input.value = value;
+     }
+
+
+
+ const toggleSwitch = document.getElementById('toggleSwitch');
+        const status = document.getElementById('status');
+
+        toggleSwitch.addEventListener('change', () => {
+            status.textContent = toggleSwitch.checked ? 'Estado: Encendido' : 'Estado: Apagado';
+        });
+		
+		

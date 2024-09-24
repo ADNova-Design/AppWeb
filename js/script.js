@@ -298,6 +298,8 @@ function generateUniqueCode() {
            now.getSeconds().toString().padStart(2, '0');
 }
 
+
+
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
         toggleSpinner(true);
@@ -317,8 +319,8 @@ async function submitOrder() {
         const address = addressInput.value;
         const reference = referenceInput.value;
         const deliveryTime = `${deliveryHourInput.value}:${deliveryMinuteInput.value} ${deliveryPeriodInput.value}`;
-        const transactionSMS = transactionSMSInput.value;
         const payWithDelivery = payWithDeliveryInput.checked;
+        const transactionSMS = payWithDelivery ? "PAGO CON LA ENTREGA" : transactionSMSInput.value;
 
         let orderDetails = `🛒 NUEVO PEDIDO\n\n`;
         orderDetails += `👤 Nombre: #${fullName}\n`;
@@ -326,17 +328,12 @@ async function submitOrder() {
         orderDetails += `🏠 Dirección: ${address}\n`;
         orderDetails += `🚩 Punto de referencia: ${reference}\n`;
         orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n\n`;
-
-        if (payWithDelivery) {
-            orderDetails += `💳 Pago con la entrega\n\n`;
-        } else {
-            orderDetails += `💳 SMS de transacción: ${transactionSMS}\n\n`;
-        }
+        orderDetails += payWithDelivery ? `💳 Pago con la entrega\n\n` : `💳 SMS de transacción: ${transactionSMS}\n\n`;
 
         orderDetails += `📦 Productos:\n`;
-
         let total = 0;
         let productsDetails = '';
+
         cartItems.forEach(item => {
             const itemTotal = item.price * item.quantity;
             total += itemTotal;
@@ -348,7 +345,6 @@ async function submitOrder() {
         if (deliveryCost > 0) {
             orderDetails += `\n💰 Costo por domicilio: $${deliveryCost.toFixed(2)}`;
         }
-
         orderDetails += `\n💰 Total a pagar: $${(total + deliveryCost).toFixed(2)}`;
 
         const uniqueCode = generateUniqueCode();
@@ -356,16 +352,38 @@ async function submitOrder() {
 
         try {
             const telegramSuccess = await sendToTelegram(orderDetails);
+            
             if (telegramSuccess) {
-                showNotification('¡Pedido realizado con éxito!', 'success');
-                $('#paymentModal').modal('hide');
-                cartItems = [];
-                updateCartCount();
+                const sheetData = {
+                    code: uniqueCode,
+                    fullName: fullName,
+                    phone: phone,
+                    address: address,
+                    reference: reference,
+                    deliveryTime: deliveryTime,
+                    transactionSMS: transactionSMS,
+                    payWithDelivery: payWithDelivery,
+                    products: productsDetails,
+                    total: total + deliveryCost
+                };
+
+                // Enviar datos a Google Sheets
+                const sheetSuccess = await sendToGoogleSheet(sheetData);
+
+                if (sheetSuccess) {
+                    showNotification('¡Pedido realizado con éxito!', 'success');
+                    $('#paymentModal').modal('hide');
+                    cartItems = [];
+                    updateCartCount();
+                } else {
+                    showNotification('Error al enviar el pedido. Por favor, inténtelo de nuevo.', 'warning');
+                }
             } else {
                 showNotification('Error al enviar el pedido. Por favor, inténtelo de nuevo.', 'error');
             }
         } catch (error) {
-            showNotification('Error al enviar el pedido. Por favor, inténtelo de nuevo.', 'error');
+            console.error('Error en el proceso de envío:', error);
+            showNotification('Error al procesar el pedido. Por favor, inténtelo de nuevo.', 'error');
         } finally {
             toggleSpinner(false);
         }
@@ -384,16 +402,20 @@ async function sendToGoogleSheet(data) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-            mode: 'no-cors' // Añade esta línea
+            mode: 'no-cors'
         });
-
-        // No mostrar mensaje de envío exitoso
+        
+        // Debido al modo 'no-cors', no podemos verificar la respuesta
+        // Asumimos que fue exitoso si no hubo errores
         return true;
     } catch (error) {
         console.error('Error al enviar datos a Google Sheet:', error);
         return false;
     }
 }
+
+
+
 	document.getElementById('payWithDelivery').addEventListener('change', function() {
     const transactionSMSInput = document.getElementById('transactionSMS');
     if (this.checked) {
@@ -472,7 +494,7 @@ document.querySelector('.contactSuport').addEventListener('click', function(e) {
 document.getElementById('telegramLink').addEventListener('click', function(e) {
     e.preventDefault();
     var appUrl = 'tg://join?invite=TnCwk8_IVcAyNDNh';
-    var webUrl = 'https://t.me/+TnCwk8_IVcAyNDNh';
+    var webUrl = '';
 
     // Intenta abrir la aplicación
     window.location = appUrl;
@@ -519,13 +541,32 @@ document.querySelectorAll('.btn-close').forEach(button => {
         input.value = value;
      }
 
+	/*  REVISAR
+	
+	
+const customSlides = document.getElementById('customSlides');
+    const indicators = document.querySelectorAll('.indicator');
+    let currentIndex = 0;
 
-
- const toggleSwitch = document.getElementById('toggleSwitch');
-        const status = document.getElementById('status');
-
-        toggleSwitch.addEventListener('change', () => {
-            status.textContent = toggleSwitch.checked ? 'Estado: Encendido' : 'Estado: Apagado';
+    function showSlide(index) {
+        currentIndex = index;
+        customSlides.style.transform = `translateX(-${index * 100}%)`;
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
         });
-		
-		
+    }
+
+    indicators.forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const index = parseInt(indicator.dataset.index);
+            showSlide(index);
+        });
+    });
+
+    // Auto slide
+    setInterval(() => {
+        const nextIndex = (currentIndex + 1) % indicators.length;
+        showSlide(nextIndex);
+    }, 3000); // Cambia cada 3 segundos
+	
+	*/

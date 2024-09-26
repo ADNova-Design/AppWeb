@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Pizzería</title>
+    <title>PizzaGo</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
+	<link href="css/banner.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -78,47 +80,60 @@
             <!-- Agrega esto justo antes del cierre del div -->
             <li class="nav-item">
                 <a class="nav-link" href="#" id="userProfileIcon">
-                    <i id="personalicon" class="bi bi-person-circle"></i>
+                    <i id="personalicon" class="bi bi-person-circle">
+					</i>
                 </a>
             </li>
         </div>
 </nav>
 
 <div class="header">
-    <h1>Bienvenido a nuestra Pizzería</h1>
+    <h2><span id="userName"></span></h2>
 </div>
 
+
+<div class="bannerContenedor">
+    <div class="banner-slider">
+        <div class="banner-slide">
+            <img src="img/banner1.jpeg" alt="Banner 1">
+            <div class="banner-text">
+                <h3>Combo 1</h3>                
+            <button class="bannerbtn" onclick="addToCart('Combo Pizza+Refresco', 429.99)">Agregar al carrito</button>
+            </div>
+        </div>
+        <div class="banner-slide">
+            <img src="img/banner.jpeg" alt="Banner 2">
+            <div class="banner-text">
+                <h3>Combo 2</h3>               
+            <button class="bannerbtn" onclick="addToCart('Combo Pizza+Refresco', 429.99)">Agregar al carrito</button>
+            </div>
+        </div>
+        <div class="banner-slide">
+            <img src="img/banner1.jpeg" alt="Banner 3">
+            <div class="banner-text">
+                <h3>Combo 3</h3>
+                    
+            <button class="bannerbtn" onclick="addToCart('Combo Pizza+Refresco', 429.99)">Agregar al carrito</button>
+            </div>
+        </div>
+		<div class="banner-slide">
+            <img src="img/banner.jpeg" alt="Banner 4">
+            <div class="banner-text">
+                <h3>Combo 4</h3>               
+            <button class="bannerbtn" onclick="addToCart('Combo Pizza+Refresco', 429.99)">Agregar al carrito</button>
+            </div>
+        </div>
+    </div>
+    <div class="banner-indicators">
+        <span class="banner-indicator active"></span>
+        <span class="banner-indicator"></span>
+        <span class="banner-indicator"></span>
+        <span class="banner-indicator"></span>
+    </div>
+</div>
+
+
 <div class="container">
-
-
-
-<!-- REVISAR
-
-
-<div class="custom-slider">
-    <div class="custom-slides" id="customSlides">
-        <div class="custom-slide">
-            <img src="https://via.placeholder.com/300x200" alt="Imagen 1">
-            <div class="text">Texto breve para la primera imagen.</div>
-        </div>
-        <div class="custom-slide">
-            <img src="https://via.placeholder.com/300x200/ff7f7f" alt="Imagen 2">
-            <div class="text">Texto breve para la segunda imagen.</div>
-        </div>
-        <div class="custom-slide">
-            <img src="https://via.placeholder.com/300x200/7f7fff" alt="Imagen 3">
-            <div class="text">Texto breve para la tercera imagen.</div>
-        </div>
-    </div>
-    <div class="indicators" id="indicators">
-        <span class="indicator active" data-index="0"></span>
-        <span class="indicator" data-index="1"></span>
-        <span class="indicator" data-index="2"></span>
-    </div>
-</div>  
-
--->
-
 
     <div class="category">
     <h2>Pizzas</h2>
@@ -297,28 +312,27 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="userProfileModalLabel">Perfil de Usuario</h5>
+                <h5 class="modal-title" id="userProfileModalLabel">Perfil del usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="userProfileForm">
-				<p>Todos los datos son almacenados localmente en su dispositivo.</p>
+                <form>
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Nombre y Apellidos</label>
-                        <input type="text" class="form-control" id="fullName" required>
+                        <label for="fullName" class="form-label">Nombre completo</label>
+                        <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp">
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="phone" required>
+                        <input type="text" class="form-control" id="phone" aria-describedby="phoneHelp">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Dirección y entre calles</label>
-                        <input type="text" class="form-control" id="address" required>
+                        <label for="address" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="address" aria-describedby="addressHelp">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="saveUserProfile">Guardar</button>
             </div>
         </div>
@@ -440,9 +454,12 @@
 <div id="loadingSpinner" class="loading-spinner">
     <div class="spinner"></div>
 </div>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@8.3.2/dist/swiper.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
+	<script src="js/banner.js"></script>
+
 
 <!-- Modal de Funcionamiento -->
 <div class="modal fade" id="funcionamientoModal" tabindex="-1" aria-labelledby="funcionamientoModalLabel" aria-hidden="true">

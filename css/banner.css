@@ -1,0 +1,99 @@
+.bannerContenedor {
+    padding: 5%;
+}
+
+.banner-slider {
+    position: relative;
+    width: 100%;
+    height: 150px; /* altura del banner */
+    margin-bottom: 10px;
+	
+	border-radius: 10px;
+}
+
+.banner-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.banner-slide img {    
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+	border-radius: 10px;
+}
+
+.banner-text {
+    background-color: rgba(143, 143, 143, 0.3); /* fondo blanco con 70% de transparencia */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+	border-radius: 10px;
+}
+
+.banner-text h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.banner-text p {
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.bannerbtn{
+    background-color: #ff5722;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    display: inline-block; /* agregar esta propiedad para mostrar los botones en línea */
+}
+
+.banner-text button:hover {
+    background-color: #3e8e41;
+}
+
+.banner-slide.active {
+    opacity: 1;
+}
+
+.banner-indicators {
+    position: relative;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.banner-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 5px;
+    border-radius: 20%;
+    background-color: #ccc;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.banner-indicator.active {
+    background-color: #ff5722;
+}

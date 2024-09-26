@@ -169,10 +169,68 @@ document.addEventListener('DOMContentLoaded', function() {
             phone: phone,
             address: address
         };
+		
+		 toggleSpinner(true); // Mostrar el spinner
+
+    // Simular una espera de 1 segundo antes de guardar los datos
+    setTimeout(() => {
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        toggleSpinner(false); // Ocultar el spinner
+        location.reload(); // Recargar la página
+        showNotification('Perfil guardado correctamente', 'success');
+    }, 1000);
+
 
         localStorage.setItem('userProfile', JSON.stringify(userProfile));
         showNotification('Perfil guardado correctamente', 'success');
     }
+	
+	document.addEventListener('DOMContentLoaded', function() {
+    const welcomeMessage = document.getElementById('welcome-message');
+    const userProfileIcon = document.getElementById('userProfileIcon');
+    const userProfileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
+    const saveUserProfileBtn = document.getElementById('saveUserProfile');
+
+    // Cargar datos del usuario si existen
+    loadUserProfile();
+
+    userProfileIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        userProfileModal.show();
+    });
+
+    saveUserProfileBtn.addEventListener('click', function() {
+        saveUserProfile();
+        userProfileModal.hide();
+    });
+
+    function saveUserProfile() {
+        const fullName = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        const userProfile = {
+            fullName: fullName,
+            phone: phone,
+            address: address
+        };
+
+        // Actualizar el mensaje de bienvenida con el nombre del usuario
+        welcomeMessage.textContent = `Hola: ${userProfile.fullName}`;
+    }
+
+    function loadUserProfile() {
+        // Cargar datos del usuario desde la base de datos o desde una fuente de datos
+        const userProfile = {
+            fullName: 'Juan Pérez',
+            phone: '123456789',
+            address: 'Calle 123'
+        };
+
+        // Actualizar el mensaje de bienvenida con el nombre del usuario
+      
+    }
+});
 
     function loadUserProfile() {
     const userProfile = JSON.parse(localStorage.getItem('userProfile'));
@@ -190,6 +248,9 @@ document.addEventListener('DOMContentLoaded', function() {
         fullNameInput.value = userProfile.fullName || '';
         phoneInput.value = userProfile.phone || '';
         addressInput.value = userProfile.address || '';
+    
+	 // Mostrar el nombre del usuario
+        document.getElementById('userName').textContent = `Hola, ${userProfile.fullName}`;
     }
 }
 });
@@ -541,32 +602,3 @@ document.querySelectorAll('.btn-close').forEach(button => {
         input.value = value;
      }
 
-	/*  REVISAR
-	
-	
-const customSlides = document.getElementById('customSlides');
-    const indicators = document.querySelectorAll('.indicator');
-    let currentIndex = 0;
-
-    function showSlide(index) {
-        currentIndex = index;
-        customSlides.style.transform = `translateX(-${index * 100}%)`;
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i === index);
-        });
-    }
-
-    indicators.forEach(indicator => {
-        indicator.addEventListener('click', () => {
-            const index = parseInt(indicator.dataset.index);
-            showSlide(index);
-        });
-    });
-
-    // Auto slide
-    setInterval(() => {
-        const nextIndex = (currentIndex + 1) % indicators.length;
-        showSlide(nextIndex);
-    }, 3000); // Cambia cada 3 segundos
-	
-	*/

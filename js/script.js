@@ -537,6 +537,8 @@ document.getElementById('celNumber').addEventListener('click', function() {
 });
 
 
+
+
  // SOPORTE POR WHATSAPP
 document.querySelector('.contactSuport').addEventListener('click', function(e) {
     var appUrl = this.href;

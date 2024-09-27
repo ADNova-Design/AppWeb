@@ -1,5 +1,56 @@
+.category-container {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.category-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 20px;
+  border: none;
+  border-radius: 50%;
+  background-color: #ff5722;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.category-btn a{
+  text-decoration: none;
+  color: inherit; /* Agrega esto */
+	
+}
+
+.category-btn:hover {
+ background-color: #e64a19;
+ 
+}
+
+/* For mobile devices, make the buttons slideable */
+@media (max-width: 768px) {
+  .category-buttons {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .category-btn {
+    margin: 10px 5px;
+  }
+}
+
+
+
+
 .bannerContenedor {
-    padding: 5%;
+    padding: 5% 5% 0;
 }
 
 .banner-slider {
@@ -32,8 +83,8 @@
 }
 
 .banner-text {
-    background-color: rgba(143, 143, 143, 0.3); /* fondo blanco con 70% de transparencia */
-    position: absolute;
+    /* background-color: rgba(143, 143, 143, 0.2); */
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -44,12 +95,14 @@
     align-items: center;
     color: #ffffff;
     text-align: center;
-	border-radius: 10px;
+    border-radius: 10px;
 }
+
 
 .banner-text h3 {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-family: fantasy;
 }
 
 .banner-text p {
@@ -78,7 +131,7 @@
 
 .banner-indicators {
     position: relative;
-    bottom: 5px;
+    bottom: 16px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -88,7 +141,7 @@
     display: inline-block;
     width: 20px;
     height: 5px;
-    border-radius: 20%;
+    border-radius: 10px;
     background-color: #ccc;
     margin: 0 5px;
     cursor: pointer;

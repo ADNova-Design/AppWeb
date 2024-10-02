@@ -139,7 +139,7 @@ document.getElementById('payWithDelivery').addEventListener('change', function()
     }
 });
 		
-// Agregar esto al final del archivo script.js
+// 
 
 document.addEventListener('DOMContentLoaded', function() {
     const userProfileIcon = document.getElementById('userProfileIcon');
@@ -232,26 +232,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-    function loadUserProfile() {
-    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
-    if (userProfile) {
-        document.getElementById('fullName').value = userProfile.fullName || '';
-        document.getElementById('phone').value = userProfile.phone || '';
-        document.getElementById('address').value = userProfile.address || '';
+   function loadUserProfile() {
+  const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+  if (userProfile && userProfile.fullName && userProfile.phone && userProfile.address) {
+    const { fullName, phone, address } = userProfile;
+    document.getElementById('fullName').value = fullName;
+    document.getElementById('phone').value = phone;
+    document.getElementById('address').value = address;
 
-        // Autollenado de los campos del pago
-        const paymentForm = document.getElementById('paymentForm');
-        const fullNameInput = paymentForm.querySelector('input[id="fullName"]');
-        const phoneInput = paymentForm.querySelector('input[id="phone"]');
-        const addressInput = paymentForm.querySelector('input[id="address"]');
+    // Autollenado de los campos del pago
+    const paymentForm = document.getElementById('paymentForm');
+    const fullNameInput = paymentForm.querySelector('input[id="fullName"]');
+    const phoneInput = paymentForm.querySelector('input[id="phone"]');
+    const addressInput = paymentForm.querySelector('input[id="address"]');
 
-        fullNameInput.value = userProfile.fullName || '';
-        phoneInput.value = userProfile.phone || '';
-        addressInput.value = userProfile.address || '';
-    
-	 // Mostrar el nombre del usuario
-        document.getElementById('userName').textContent = `Hola, ${userProfile.fullName}`;
-    }
+    fullNameInput.value = fullName;
+    phoneInput.value = phone;
+    addressInput.value = address;
+
+    // Mostrar el nombre del usuario
+    document.getElementById('userName').textContent = `Hola, ${fullName}`;
+  } else {
+    const userProfileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
+    userProfileModal.show();
+  }
 }
 });
 

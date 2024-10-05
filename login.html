@@ -1,0 +1,156 @@
+<html>
+ <head>
+		  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+   Pizzaroo Login
+  </title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+        }
+        .logo {
+            margin-bottom: 40px;
+        }
+        .logo img {
+            width: 70%;
+			
+        }
+        .logo h1 {
+            font-size: 36px;
+            margin: 10px 0;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+        }
+        .input-group i {
+            position: absolute;
+            margin-left: 15px;
+            margin-top: 15px;
+            color: #ccc;
+        }
+        .input-group input::placeholder {
+            color: #ccc;
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group input {
+            padding-left: 45px;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ff3100ff;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            background-color: #333;
+        }
+        .signup {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup a {
+            color: #ff3100ff;
+            text-decoration: none;
+        }
+        .signup a:hover {
+            text-decoration: underline;
+        }
+        .terms {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container">
+   <div class="logo" style="height: auto; width: 100%;">
+    <img alt="Pizzaroo Login" height="auto" src="img/logo.png" width="100%"/>    
+   </div>
+   
+   <form id="login-form">
+  <div class="input-group">
+    <i class="fas fa-user"></i>
+    <input placeholder="Username" type="text" id="username" name="username">
+  </div>
+  <div class="input-group">
+    <i class="fas fa-lock"></i>
+    <input placeholder="Password" type="password" id="password" name="password">
+  </div>
+  <button class="btn" id="login-btn">Iniciar Sesión</button>
+  <div id="spinner" style="display: none;">
+    <i class="fas fa-spinner fa-spin"></i>
+  </div>
+</form>
+
+   <div class="signup">
+    Aún no tienes cuenta?
+ <a href="#">
+     Registrate
+    </a>
+   </div>
+   <div class="terms">
+   Terminos y Condiciones
+   </div>
+  </div>
+  
+  <script>
+  document.getElementById("login-btn").addEventListener("click", function() {
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+  
+  var url = "https://script.google.com/macros/s/AKfycbzwcRhE-mtBXfjmDqgANGZeDkTLxcM_cHe1h64tVpK-mfwzm9Hy7Lnr2Vb5FyRakW5y1A/exec";
+  var params = "?username=" + username + "&password=" + password;
+  
+  document.getElementById("spinner").style.display = "block";
+  
+  fetch(url + params)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("spinner").style.display = "none";
+      
+      if (data == "Login correcto") {
+        console.log("Login aprobado");
+        window.location.href = "https://adnova-design.github.io/AppWeb/manage.html";
+      } else {
+        console.log("Login no aprobado");
+        alert("Login incorrecto");
+      }
+    });
+});
+</script>
+  
+ </body>
+</html>

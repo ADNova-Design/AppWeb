@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
    
-    <title>Visualizador de datos</title>
+    <title>Pizzaroo for Delivery</title>
 
     <style>
         body {
@@ -17,7 +17,7 @@
 
         header {
             font-family: "Tahoma";
-            background-color: #ff5722;
+            background-color: #ff3100ff;
             color: white;
             padding: 10px;
             text-align: center;
@@ -25,7 +25,7 @@
         }
 
         .navbar {
-            background-color: #ff5722 !important;
+            background-color: #ff3100ff !important;
         }
 
         .inputSearch {
@@ -35,7 +35,7 @@
             background-color: white;
             color: black;
             border: none;
-            border-radius: 20px;
+            border-radius: 10px;
             padding: 10px;
         }
 
@@ -72,7 +72,7 @@
             background-color: white;
             color: black;
             border: none;
-            border-radius: 20px;
+            border-radius: 10px;
             cursor: pointer;
         }
 		
@@ -127,21 +127,9 @@
     <!-- Modal de Usuario -->
     <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="userModalLabel">Información del Usuario</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+            <div class="modal-content">               
 				
-				<!--VENTANA MODALE INFORMACION DE USER-->
-                <div class="modal-body">
-                   <div id="userInfo">			
-                        <p><strong>Nombre:</strong> <span id="userName"></span></p>
-                        <p><strong>Cargo:</strong> <span id="userRole"></span></p>
-                        <p><strong>Teléfono:</strong> <span id="userPhone"></span></p>
-                        <p><strong>Correo:</strong> <span id="userEmail"></span></p>
-                    </div>
-                </div>
+				
 				
 				<!-- Ventana modal de búsqueda -->
 <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
@@ -232,12 +220,12 @@ fetch('https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwo
       const cuentaRegresiva = document.createElement('div');
       cuentaRegresiva.className = 'cuenta-regresiva';
       cuentaRegresiva.style.position = 'absolute';
-      cuentaRegresiva.style.bottom = '25px';
+      cuentaRegresiva.style.bottom = '5px';
       cuentaRegresiva.style.right = '10px';
       cuentaRegresiva.style.padding = '8px';
       cuentaRegresiva.style.border = '1px solid #ccc';
-      cuentaRegresiva.style.borderRadius = '20px';
-      cuentaRegresiva.style.background = '#ff5722';
+      cuentaRegresiva.style.borderRadius = '10px';
+      cuentaRegresiva.style.background = 'rgb(93 185 109)';
       cuentaRegresiva.style.fontSize = '14px';
       cuentaRegresiva.style.fontWeight = 'bold';
       const cardBody = document.createElement('div');
@@ -251,18 +239,19 @@ fetch('https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwo
           <strong>Teléfono:</strong> ${item.Teléfono}<br>
           <strong>Dirección:</strong> ${item.Dirección}<br>
           <strong>Punto de referencia:</strong> ${item['Punto de referencia']}<br>
-          <strong>Hora de entrega:</strong> ${horaEntrega}<br>
+          <strong>Hora de entrega:</ strong> ${horaEntrega}<br>
           <strong>SMS:</strong> ${item.SMS}<br>
-          <strong>Productos:</strong> ${item.Productos}<br>
-          <strong>Total:</strong> ${item.Total}<br>
-          <strong>Entregado :</strong> ${item.Entregado ? 'Sí' : 'No'}
-        </p>
+          <strong>Productos:</strong> ${item.Productos}<br><br>
+          <strong>TOTAL:</strong> <strong>${item.Total}</strong><br>
+		  <br>
+          </p>
       `;
       cardBody.appendChild(cuentaRegresiva);
       card.appendChild(cardBody);
       googleAppScriptDataContainer.appendChild(card);
       actualizarCuentaRegresiva(cuentaRegresiva, horaEntrega, item.Fecha);
     });
+    ordenarPorEntrega(); // Llamar a la función para ordenar los datos por tiempo restante de entrega
   })
   .catch(error => console.error('Error:', error));
  
@@ -312,16 +301,33 @@ function ordenarPorFecha() {
   });
   ordenFecha = ordenFecha === 'asc' ? 'desc' : 'asc';
 }
-
 // Function to sort data by remaining time for delivery
 function ordenarPorEntrega() {
   const cards = googleAppScriptDataContainer.children;
   const arrayCards = Array.from(cards);
   arrayCards.sort((a, b) => {
-    const cuentaRegresivaA = a.querySelector('.cuenta-regresiva').textContent;
-    const cuentaRegresivaB = b.querySelector('.cuenta-regresiva').textContent;
-    const tiempoA = cuentaRegresivaA.split(', ');
-    const tiempoB = cuentaRegresivaB.split(', ');
+    const cuentaRegresivaA = a.querySelector('.cuenta-regresiva');
+    const cuentaRegresivaB = b.querySelector('.cuenta-regresiva');
+    let tiempoA, tiempoB;
+
+    if (cuentaRegresivaA && cuentaRegresivaA.textContent && cuentaRegresivaA.textContent.includes(',')) {
+      tiempoA = cuentaRegresivaA.textContent.trim().split(', ');
+      if (tiempoA.length < 3) {
+        tiempoA = ['0', '0', '0'];
+      }
+    } else {
+      tiempoA = ['0', '0', '0'];
+    }
+
+    if (cuentaRegresivaB && cuentaRegresivaB.textContent && cuentaRegresivaB.textContent.includes(',')) {
+      tiempoB = cuentaRegresivaB.textContent.trim().split(', ');
+      if (tiempoB.length < 3) {
+        tiempoB = ['0', '0', '0'];
+      }
+    } else {
+      tiempoB = ['0', '0', '0'];
+    }
+
     const horasA = parseInt(tiempoA[0].split(' ')[0]);
     const minutosA = parseInt(tiempoA[1].split(' ')[0]);
     const segundosA = parseInt(tiempoA[2].split(' ')[0]);
@@ -330,7 +336,14 @@ function ordenarPorEntrega() {
     const segundosB = parseInt(tiempoB[2].split(' ')[0]);
     const totalA = horasA * 3600 + minutosA * 60 + segundosA;
     const totalB = horasB * 3600 + minutosB * 60 + segundosB;
-    return totalA - totalB;
+
+    if (a.querySelector('.cuenta-regresiva').textContent === 'Tiempo Agotado') {
+      return 1;
+    } else if (b.querySelector('.cuenta-regresiva').textContent === 'Tiempo Agotado') {
+      return -1;
+    } else {
+      return totalA - totalB;
+    }
   });
   googleAppScriptDataContainer.innerHTML = '';
   arrayCards.forEach(card => {
@@ -341,8 +354,7 @@ function ordenarPorEntrega() {
 // Agregar eventos a los botones de filtrado
 document.getElementById('btn-filtro-az').addEventListener('click', ordenarPorNombre);
 document.getElementById('btn-filtro-fecha').addEventListener('click', ordenarPorFecha);
-
-
+document.getElementById('btn-filtro-entrega').addEventListener('click', ordenarPorEntrega);
 
 function actualizarCuentaRegresiva(cuentaRegresiva, horaEntrega, fecha) {
   // Convertir la hora de entrega a un formato que pueda ser procesado por JavaScript

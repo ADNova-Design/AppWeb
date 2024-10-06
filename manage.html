@@ -156,6 +156,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+	// Comprobar si hay información guardada en el almacenamiento local
+if (!localStorage.getItem('usuario') || localStorage.getItem('usuario') === '') {
+  // Redirigir al usuario a la página de inicio de sesión
+  window.location.href = 'login.html';
+}
+	
 	// **Actualizar**
 document.getElementById('btn-actualizar').addEventListener('click', function() {
   location.reload();

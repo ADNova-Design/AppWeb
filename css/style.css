@@ -61,7 +61,8 @@ h2 #userName {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: auto;
+    height: auto;
+    width: 100%;
 }
 
 .container{
@@ -94,13 +95,14 @@ h2 #userName {
 }
 
 .product:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .product img {
+	padding: 2px;
     max-width: 100%;
-    height: auto;
+    height: 100%;	
     object-fit: cover !important;
     border-radius: 8px;
     margin-bottom: 10px;

@@ -134,10 +134,17 @@ body {
     <div id="spinner" class="spinner">Cargando...</div>
   </div>
 <script>
+
   document.getElementById('login-btn').addEventListener('click', function(event) {
   event.preventDefault();
   var username = document.getElementById('username').value;
   var password = document.getElementById('password').value;
+
+  if (username === '' || password === '') {
+    document.getElementById('notification').innerText = 'Por favor, ingrese su nombre de usuario y contraseña.';
+    document.getElementById('notification').style.display = 'block';
+    return;
+  }
 
   var data = {
     username: username,

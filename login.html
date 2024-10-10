@@ -44,6 +44,11 @@ body {
   color: #333;
 }
 
+a {
+text-decoration: none;
+color: #ff3100ff;;
+}
+
 .input-group {
   margin-bottom: 20px;
   position: relative;
@@ -128,13 +133,17 @@ body {
         <input placeholder="Contraseña" type="password" id="password" name="password" autocomplete="current-password" required>
       </div>
       <button class="btn" id="login-btn">Iniciar Sesión</button>
+	  
+	  <p>
+	  <a href="https://wa.me/18632541732">Crear cuenta de repartidor</a>
+	  </p>
     </form>
 
     <div id="notification" class="notification"></div>
     <div id="spinner" class="spinner">Cargando...</div>
   </div>
+  
 <script>
-
   document.getElementById('login-btn').addEventListener('click', function(event) {
   event.preventDefault();
   var username = document.getElementById('username').value;

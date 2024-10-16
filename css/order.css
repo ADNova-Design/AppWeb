@@ -1,0 +1,120 @@
+   #order-header {
+            font-family: "Tahoma";
+            background-color: #ff3100ff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+			margin: 2%;
+        }
+
+        .navbar {
+            background-color: #ff3100ff !important;
+        }
+
+        #inputSearch {
+            width: 100%;
+            text-align: left;
+            font-size: 16px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+		
+		#cuenta-regresiva-recarga {
+  font-size: 15px;
+  font-weight: bold; 
+  text-align: right;
+  padding: 0;
+  color: white;
+ 
+}
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .actions {			
+            margin-top: 20px;
+            display: flex;
+            overflow-x: auto;
+        }
+
+        .actions button {
+            font-family: "Tahoma";
+            text-align: center;
+            font-size: 12px;
+
+          
+            background-color: white;
+            color: black;
+            border: none;            
+			padding: 10px 20px;
+			border-radius: 20px;
+			margin: 0 5px;
+			cursor: pointer;	
+            text-align: center;		
+        }
+		
+		.card{
+		border-radius: 10px;
+		box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+		}
+		
+		.card-title{
+		font-size: 20px;
+		margin-bottom: 5px;
+		}
+		.card-body{
+		 padding: 0 8px;			
+		}
+		
+	.cuenta-regresiva {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 8px;
+    /* border: 1px solid #ccc; */
+    border-radius: 10px;
+    background: rgb(93 185 109);
+    font-size: 14px;
+    font-weight: bold;
+    margin: -23px 50px;
+}
+		
+		.match {
+		background-color: #979797; /* Fondo de color amarillo claro */
+		border: 1px solid #ccc; /* Borde gris claro */
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra gris claro */
+}
+       
+
+        @media (min-width: 992px) {
+            .modal-dialog {
+                max-width: 800px;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .actions {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }		
+		
+		

@@ -132,12 +132,21 @@ h2 #userName {
 }
 
 .new-label {
-    background-color: red;
+    background-color: rgb(29, 175, 48);
     color: white;
 	font-size: 0.5em;
     padding: 5px 10px;
     border-radius: 5px;   
 }
+.hot-label{
+    background-color: rgb(255, 4, 4); 
+    color: white;
+	font-size: 0.5em;
+    padding: 5px 10px;
+    border-radius: 5px; 
+
+}
+
 
 .button-container {
     display: flex;
@@ -235,20 +244,25 @@ h2 #userName {
 		font-size: 15px;
 	}
 		
-		 .cart-item {
-            display: flex;
+		 .cart-item {            
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
             padding: 10px;
             border-bottom: 1px solid #eee;
         }
-        .cart-item-info {
-            flex-grow: 1;
-        }
         .cart-item-actions {
             display: flex;
             align-items: center;
+            text-align: center;
+            margin: 0 15%;
+        }
+        
+        .cart-item-info {
+            margin: 1%;
+            font-size: 18px;
+            text-align: justify;
+            flex-grow: 1;
         }
         .cart-item-actions button {
             margin: 0 5px;

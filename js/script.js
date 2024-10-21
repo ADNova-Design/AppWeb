@@ -44,7 +44,7 @@ let cartItems = [];
         });
  
 
-         let deliveryCost = subtotal <= 400 ? 200 : 0;
+         let deliveryCost = subtotal <= 500 ? 150 : 0;
         let total = subtotal + deliveryCost;
 
         cartHTML += `<div class="cart-subtotal">Subtotal: $${subtotal.toFixed(2)}</div>`;
@@ -82,7 +82,7 @@ let cartItems = [];
        function showPaymentModal() {
     $('#cartModal').modal('hide');
     let subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    let deliveryCost = subtotal <= 400 ? 200 : 0;
+    let deliveryCost = subtotal <= 500 ? 150 : 0;
     let total = subtotal + deliveryCost;
 
     let paymentDetails = `Subtotal: $${subtotal.toFixed(2)}`;
@@ -406,7 +406,7 @@ async function submitOrder() {
             orderDetails += `- ${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${itemTotal.toFixed(2)}\n`;
         });
 
-        let deliveryCost = total <= 400 ? 200 : 0;
+        let deliveryCost = total <= 500 ? 150 : 0;
         if (deliveryCost > 0) {
             orderDetails += `\n💰 Costo por domicilio: $${deliveryCost.toFixed(2)}`;
         }

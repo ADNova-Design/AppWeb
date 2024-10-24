@@ -156,11 +156,10 @@ document.addEventListener('DOMContentLoaded', function() {
         userProfileModal.hide();
     });
 
-    
 // Función para establecer la hora actual + 30 minutos como valor predeterminado
 function setDefaultDeliveryTime() {
     const now = new Date();
-    now.setMinutes(now.getMinutes() + 30); // Sumar 30 minutos
+    now.setMinutes(now.getMinutes() + 35); // Sumar 30 minutos
 
     const hours = now.getHours();
     const minutes = now.getMinutes();
@@ -457,7 +456,7 @@ async function submitOrder() {
         orderDetails += `📞 Teléfono: ${phone}\n`;
         orderDetails += `🏠 Dirección: ${address}\n`;
         orderDetails += `🚩 Punto de referencia: ${reference}\n`;
-        orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n\n`;
+        orderDetails += `🕒 Hora de entrega: ${deliveryTime}\n\n`; // Usar la hora establecida por el usuario
         orderDetails += payWithDelivery ? `💳 Pago con la entrega\n\n` : `💳 SMS de transacción: ${transactionSMS}\n\n`;
 
         orderDetails += `📦 Productos:\n`;
@@ -486,7 +485,7 @@ async function submitOrder() {
             phone,
             address,
             reference,
-            deliveryTime,
+            deliveryTime, // Usar la hora establecida por el usuario
             transactionSMS,
             products: productsDetails,
             total: total + deliveryCost,
@@ -502,7 +501,7 @@ async function submitOrder() {
                     phone: phone,
                     address: address,
                     reference: reference,
-                    deliveryTime: deliveryTime,
+                    deliveryTime: deliveryTime, // Usar la hora establecida por el usuario
                     transactionSMS: transactionSMS,
                     payWithDelivery: payWithDelivery,
                     products: productsDetails,
@@ -541,9 +540,6 @@ async function submitOrder() {
 function saveOrderToHistory(orderData) {
     // Obtener el historial de pedidos existente del localStorage
     const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
-    
-    // Agregar la fecha al pedido
-    orderData.date = new Date().toISOString(); // Guarda la fecha en formato ISO
     
     // Agregar el nuevo pedido al historial
     existingOrders.push(orderData);

@@ -1,5 +1,4 @@
 let cartItems = [];
-
         function addToCart(product, price) {
             let existingItem = cartItems.find(item => item.name === product);
             if (existingItem) {
@@ -363,8 +362,6 @@ function generateUniqueCode() {
            now.getSeconds().toString().padStart(2, '0');
 }
 
-
-
 async function submitOrder() {
     if (document.getElementById('paymentForm').checkValidity()) {
         toggleSpinner(true);
@@ -415,6 +412,20 @@ async function submitOrder() {
         const uniqueCode = generateUniqueCode();
         orderDetails += `\n\nCódigo: ${uniqueCode}`;
 
+
+// Guardar el pedido en localStorage y mostrar en consola
+const orderData = {
+    fullName,
+    phone,
+    address,
+    reference,
+    deliveryTime,
+    transactionSMS,
+    products: productsDetails,
+    total: total + deliveryCost,
+    date: new Date().toISOString() // Guarda la fecha en formato ISO
+};
+
         try {
             const telegramSuccess = await sendToTelegram(orderDetails);
             
@@ -435,7 +446,11 @@ async function submitOrder() {
                 // Enviar datos a Google Sheets
                 const sheetSuccess = await sendToGoogleSheet(sheetData);
 
-                if (sheetSuccess) {
+                if (sheetSuccess) {          
+                     // Guardar los datos en Historial de Pedidos          
+                    saveOrderToHistory(orderData);
+                    console.log("Detalles del pedido guardados:", orderData); // Agregado para ver en consola")
+
                     showNotification('¡Pedido realizado con éxito!', 'success');
                     $('#paymentModal').modal('hide');
                     cartItems = [];
@@ -456,7 +471,88 @@ async function submitOrder() {
         showNotification('Por favor, complete todos los campos requeridos.', 'error');
     }
 }
+function saveOrderToHistory(orderData) {
+    // Obtener el historial de pedidos existente del localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    
+    // Agregar la fecha al pedido
+    orderData.date = new Date().toISOString(); // Guarda la fecha en formato ISO
+    
+    // Agregar el nuevo pedido al historial
+    existingOrders.push(orderData);
+    
+    // Guardar el historial actualizado en el localStorage
+    localStorage.setItem('orderHistory', JSON.stringify(existingOrders));
+    
+    console.log("Pedido guardado en el historial:", existingOrders); // Mostrar el historial actualizado en consola
+}
 
+function showOrderHistory() {
+    const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    const orderHistoryList = document.getElementById('orderHistoryList');
+    orderHistoryList.innerHTML = ''; // Limpiar contenido previo
+
+    existingOrders.forEach((order, index) => {
+        const orderDate = new Date(order.date).toLocaleString(); // Usar la fecha guardada
+        const orderElement = document.createElement('div');
+        orderElement.innerHTML = `
+            <div>
+                <button class="btn btn-link" onclick="showOrderDetailModal(${index})">Pedido ${index + 1} - ${orderDate}</button>
+            </div>
+        `;
+        orderHistoryList.appendChild(orderElement);
+    });
+
+    console.log("Historial de pedidos mostrado:", existingOrders); // Verifica que se muestre el historial
+}
+
+function showOrderDetailModal(orderIndex) {
+    const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+    const order = existingOrders[orderIndex];
+
+    // Mostrar los detalles en otra modal
+    const orderDetailsContent = `
+        <h5>Detalles del Pedido</h5>
+        <p><strong>Nombre:</strong> ${order.fullName}</p>
+        <p><strong>Teléfono:</strong> ${order.phone}</p>
+        <p><strong>Dirección:</strong> ${order.address}</p>
+        <p><strong>Punto de referencia:</strong> ${order.reference}</p>
+        <p><strong>Hora de entrega:</strong> ${order.deliveryTime}</p>
+        <p><strong>SMS de transacción:</strong> ${order.transactionSMS}</p>
+        <p><strong>Productos:</strong></p>
+        <p>${order.products}</p>
+        <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+    `;
+
+    // Crear una nueva modal para mostrar los detalles
+    const orderDetailsModal = document.createElement('div');
+    orderDetailsModal.className = 'modal fade';
+    orderDetailsModal.id = 'orderDetailsModal';
+    orderDetailsModal.tabIndex = '-1';
+    orderDetailsModal.innerHTML = `
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalles del Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ${orderDetailsContent}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(orderDetailsModal);
+    const modal = new bootstrap.Modal(orderDetailsModal);
+    modal.show();
+    modal._element.addEventListener('hidden.bs.modal', () => {
+        orderDetailsModal.remove(); // Elimina el modal del DOM al cerrarlo
+    });
+}
 
 async function sendToGoogleSheet(data) {
     const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxoY6t07GMxfF7dCAArrINCXgXUc4tSwou48km1rmAPVmAsXVKODSceR5v9EYodUoVm/exec';
@@ -478,8 +574,6 @@ async function sendToGoogleSheet(data) {
         return false;
     }
 }
-
-
 
 	document.getElementById('payWithDelivery').addEventListener('change', function() {
     const transactionSMSInput = document.getElementById('transactionSMS');
@@ -539,9 +633,6 @@ document.getElementById('celNumber').addEventListener('click', function() {
   navigator.clipboard.writeText('+53 59072053');
   showNotification('Número de teléfono copiado al portapapeles', 'success');
 });
-
-
-
 
  // SOPORTE POR WHATSAPP
 document.querySelector('.contactSuport').addEventListener('click', function(e) {
@@ -608,3 +699,15 @@ document.querySelectorAll('.btn-close').forEach(button => {
         input.value = value;
      }
 
+
+     document.getElementById('accountNumber').addEventListener('click', function() {
+        const accountNumber = '9204 0699 9818 9625';
+        navigator.clipboard.writeText(accountNumber)
+            .then(() => {
+                showNotification('Número de cuenta copiado al portapapeles', 'success');
+            })
+            .catch(err => {
+                console.error('Error al copiar al portapapeles: ', err);
+                showNotification('Error al copiar el número de cuenta', 'error');
+            });
+    });

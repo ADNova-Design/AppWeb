@@ -65,11 +65,6 @@ h2 #userName {
     width: 100%;
 }
 
-.container{
-	
-}
-
-
 .unavailable-image {
   filter: grayscale(0) sepia(100%) hue-rotate(0deg) saturate(2) contrast(1);
 }
@@ -105,7 +100,6 @@ h2 #userName {
     height: 100%;	
     object-fit: cover !important;
     border-radius: 8px;
-    margin-bottom: 10px;
 }
 
 .product h3 {
@@ -188,7 +182,6 @@ h2 #userName {
 }
 
 .btn:hover {
-    background-color: ;
     transform: scale(1.03);
 	
 }
@@ -518,17 +511,14 @@ button #userProfileIcon{
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-.navbar-light .navbar-toggler {
-   
-}
-
 .contactSuport {
     outline: none;
-    text-decoration: none;	
+    text-decoration: none !important;
+    color: #000000;
 }
 
 .contactSuport a:hover{
-    color: white;
+    color: #333;
     text-decoration: none;	
 }
 .modal {
@@ -543,6 +533,13 @@ button #userProfileIcon{
     overflow-y: auto;
     outline: 0;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+    text-align: justify;
 }
 
 .modal-content {
@@ -734,10 +731,6 @@ body.dark-mode {
     color: #fff;
 }
 
-body.dark-mode .navbar {	
-
-}
-
 body.dark-mode .product {
     background-color: #444;
     color: #fff;
@@ -775,6 +768,14 @@ body.dark-mode .form-control:focus {
 body.dark-mode .btn-secondary {
     background-color: #666;
     border-color: #777;
+}
+
+body.dark-mode .btn-link {
+    color: #fff;
+}
+
+body.dark-mode .contactSuport{    
+    color: #fff;
 }
 
 /* Estilos adicionales para mejorar la legibilidad */
@@ -911,3 +912,14 @@ input[type=time]::-webkit-inner-spin-button {
 #userProfileModal .modal-footer {
     border-top: 1px solid #888;
 }
+
+
+.btn-link{
+  text-decoration: none !important;
+  background: none !important;
+  border: none;
+  border-bottom: 1px solid;
+  font-size: 16px;
+  color:#333
+}
+

@@ -847,11 +847,9 @@
                         <div class="mb-3">
                             <label for="deliveryTime" class="form-label">Hora de entrega (8:00am - 8:00pm)</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="deliveryHour" required maxlength="2"
-                                    placeholder="" oninput="formatHour(this)">
+                                <input type="number" class="form-control" id="deliveryHour" required maxlength="2" placeholder="" oninput="formatHour(this)">
                                 <span class="input-group-text">:</span>
-                                <input type="number" class="form-control" id="deliveryMinute" required maxlength="2"
-                                    placeholder="" oninput="formatMinute(this)">
+                                <input type="number" class="form-control" id="deliveryMinute" required maxlength="2" placeholder="" oninput="formatMinute(this)">
                                 <select class="form-select" id="deliveryPeriod">
                                     <option value="AM">AM</option>
                                     <option value="PM">PM</option>
@@ -931,7 +929,7 @@
 
 
    
-  <!-- Modal de Historial de Pedidos -->
+ <!-- Modal de Historial de Pedidos -->
 <div class="modal fade" id="histiorialPedidos" tabindex="-1" aria-labelledby="histiorialPedidosLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -972,6 +970,9 @@
         const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
         const orderHistoryList = document.getElementById('orderHistoryList');
         orderHistoryList.innerHTML = ''; // Limpiar contenido previo
+
+        // Ordenar los pedidos por fecha (más reciente primero)
+        existingOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         existingOrders.forEach((order, index) => {
             const orderDate = new Date(order.date).toLocaleString(); // Usar la fecha guardada

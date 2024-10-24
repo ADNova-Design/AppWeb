@@ -137,9 +137,7 @@ document.getElementById('payWithDelivery').addEventListener('change', function()
         transactionSMSInput.style.display = 'block';
     }
 });
-		
-// 
-
+ 
 document.addEventListener('DOMContentLoaded', function() {
     const userProfileIcon = document.getElementById('userProfileIcon');
     const userProfileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
@@ -157,6 +155,59 @@ document.addEventListener('DOMContentLoaded', function() {
         saveUserProfile();
         userProfileModal.hide();
     });
+
+    
+// Función para establecer la hora actual + 30 minutos como valor predeterminado
+function setDefaultDeliveryTime() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 30); // Sumar 30 minutos
+
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+
+    // Convertir a formato de 12 horas
+    const formattedHour = hours % 12 || 12; // Convertir 0 a 12
+    const formattedMinute = minutes < 10 ? '0' + minutes : minutes; // Asegurar dos dígitos
+
+    // Establecer los valores en los campos
+    document.getElementById('deliveryHour').value = formattedHour;
+    document.getElementById('deliveryMinute').value = formattedMinute;
+    document.getElementById('deliveryPeriod').value = period;
+}
+
+// Función para validar el tiempo de entrega
+function validateDeliveryTime() {
+    const hour = parseInt(document.getElementById('deliveryHour').value);
+    const minute = parseInt(document.getElementById('deliveryMinute').value);
+    const period = document.getElementById('deliveryPeriod').value;
+
+    // Convertir la hora a formato de 24 horas para la comparación
+    const deliveryHour24 = (period === 'PM' && hour < 12) ? hour + 12 : hour;
+    const deliveryTime = new Date();
+    deliveryTime.setHours(deliveryHour24);
+    deliveryTime.setMinutes(minute);
+
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 30); // Hora actual + 30 minutos
+
+    if (deliveryTime < now) {
+        alert('El tiempo de entrega debe ser al menos 30 minutos a partir de la hora actual.');
+        return false; // Evitar el envío del formulario
+    }
+    return true; // Permitir el envío del formulario
+}
+
+// Llamar a la función para establecer la hora predeterminada al cargar la página
+window.onload = setDefaultDeliveryTime;
+
+// Ejemplo de cómo validar al enviar el formulario
+document.getElementById('yourFormId').addEventListener('submit', function(event) {
+    if (!validateDeliveryTime()) {
+        event.preventDefault(); // Evitar el envío si la validación falla
+    }
+});
+
 
     function saveUserProfile() {
         const fullName = document.getElementById('fullName').value;
@@ -380,9 +431,26 @@ async function submitOrder() {
         const phone = phoneInput.value;
         const address = addressInput.value;
         const reference = referenceInput.value;
+        const deliveryHour = parseInt(deliveryHourInput.value);
+        const deliveryMinute = parseInt(deliveryMinuteInput.value);
+        const deliveryPeriod = deliveryPeriodInput.value;
         const deliveryTime = `${deliveryHourInput.value}:${deliveryMinuteInput.value} ${deliveryPeriodInput.value}`;
         const payWithDelivery = payWithDeliveryInput.checked;
         const transactionSMS = payWithDelivery ? "PAGO CON LA ENTREGA" : transactionSMSInput.value;
+
+        // Validar que el tiempo de entrega no sea menor a la hora actual + 30 minutos
+        const now = new Date();
+        const minTime = new Date(now.getTime() + 30 * 60000); // Hora actual + 30 minutos
+
+        const deliveryDateTime = new Date();
+        deliveryDateTime.setHours(deliveryHour + (deliveryPeriod === 'PM' ? 12 : 0));
+        deliveryDateTime.setMinutes(deliveryMinute);
+
+        if (deliveryDateTime < minTime) {
+            showNotification('El tiempo de entrega debe ser al menos 30 minutos a partir de la hora actual.', 'error');
+            toggleSpinner(false);
+            return;
+        }
 
         let orderDetails = `🛒 NUEVO PEDIDO\n\n`;
         orderDetails += `👤 Nombre: #${fullName}\n`;
@@ -412,20 +480,18 @@ async function submitOrder() {
         const uniqueCode = generateUniqueCode();
         orderDetails += `\n\nCódigo: ${uniqueCode}`;
 
-
-// Guardar el pedido en localStorage y mostrar en consola
-const orderData = {
-    fullName,
-    phone,
-    address,
-    reference,
-    deliveryTime,
-    transactionSMS,
-    products: productsDetails,
-    total: total + deliveryCost,
-    date: new Date().toISOString() // Guarda la fecha en formato ISO
-};
-
+        // Guardar el pedido en localStorage y mostrar en consola
+        const orderData = {
+            fullName,
+            phone,
+            address,
+            reference,
+            deliveryTime,
+            transactionSMS,
+            products: productsDetails,
+            total: total + deliveryCost,
+            date: new Date().toISOString() // Guarda la fecha en formato ISO
+        };
         try {
             const telegramSuccess = await sendToTelegram(orderDetails);
             
@@ -471,6 +537,7 @@ const orderData = {
         showNotification('Por favor, complete todos los campos requeridos.', 'error');
     }
 }
+
 function saveOrderToHistory(orderData) {
     // Obtener el historial de pedidos existente del localStorage
     const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
@@ -512,17 +579,26 @@ function showOrderDetailModal(orderIndex) {
 
     // Mostrar los detalles en otra modal
     const orderDetailsContent = `
-        <h5>Detalles del Pedido</h5>
-        <p><strong>Nombre:</strong> ${order.fullName}</p>
-        <p><strong>Teléfono:</strong> ${order.phone}</p>
-        <p><strong>Dirección:</strong> ${order.address}</p>
-        <p><strong>Punto de referencia:</strong> ${order.reference}</p>
-        <p><strong>Hora de entrega:</strong> ${order.deliveryTime}</p>
-        <p><strong>SMS de transacción:</strong> ${order.transactionSMS}</p>
-        <p><strong>Productos:</strong></p>
-        <p>${order.products}</p>
-        <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
-    `;
+    <h5>Detalles del Pedido</h5>
+    <p><strong>Nombre:</strong> ${order.fullName}</p>
+    <p><strong>Teléfono:</strong> ${order.phone}</p>
+    <p><strong>Dirección:</strong> ${order.address}</p>
+    <p><strong>Punto de referencia:</strong> ${order.reference}</p>
+    <p><strong>Hora de entrega:</strong> ${formatDeliveryTime(order.deliveryTime)}</p>
+    <p><strong>SMS de transacción:</strong> ${order.transactionSMS}</p>
+    <p><strong>Productos:</strong></p>
+    <p>${order.products}</p>
+    <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+`;
+
+// Función para formatear la hora de entrega
+function formatDeliveryTime(deliveryTime) {
+    const [time, period] = deliveryTime.split(' '); // Separar la hora y el periodo (AM/PM)
+    const [hour, minute] = time.split(':'); // Separar horas y minutos
+    const formattedTime = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')} ${period}`; // Asegurarse de que tenga dos dígitos
+    return formattedTime;
+}
+
 
     // Crear una nueva modal para mostrar los detalles
     const orderDetailsModal = document.createElement('div');
@@ -710,4 +786,4 @@ document.querySelectorAll('.btn-close').forEach(button => {
                 console.error('Error al copiar al portapapeles: ', err);
                 showNotification('Error al copiar el número de cuenta', 'error');
             });
-    });
+    });    

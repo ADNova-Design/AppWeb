@@ -929,7 +929,7 @@
 
 
    
- <!-- Modal de Historial de Pedidos -->
+  <!-- Modal de Historial de Pedidos -->
 <div class="modal fade" id="histiorialPedidos" tabindex="-1" aria-labelledby="histiorialPedidosLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -970,9 +970,6 @@
         const existingOrders = JSON.parse(localStorage.getItem('orderHistory')) || [];
         const orderHistoryList = document.getElementById('orderHistoryList');
         orderHistoryList.innerHTML = ''; // Limpiar contenido previo
-
-        // Ordenar los pedidos por fecha (más reciente primero)
-        existingOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         existingOrders.forEach((order, index) => {
             const orderDate = new Date(order.date).toLocaleString(); // Usar la fecha guardada
